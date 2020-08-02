@@ -22,3 +22,6 @@
 * html, css, javascript 
 
 **GitHubPages**
+
+* https://eeealesha.github.io/mesto/index.html
+
