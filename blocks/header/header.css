@@ -1,9 +1,9 @@
 .header {
   padding-top: 45px;
-  border-bottom: 1px solid #545454; 
+  border-bottom: 1px solid #545454;
   max-width: 882px;
   margin: 0 auto;
-  min-height: 74px;
+  padding-bottom: 40px;
 }
 
 @media screen and (max-width: 630px) {
