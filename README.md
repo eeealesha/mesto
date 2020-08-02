@@ -23,5 +23,5 @@
 
 **GitHubPages**
 
-https://eeealesha.github.io/mesto/index.html
+* https://eeealesha.github.io/mesto/index.html
 
