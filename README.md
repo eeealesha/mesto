@@ -1,17 +1,19 @@
 # Проект 4: Место
 
+## Автор: Гаврилов Алексей 
+
 ### Обзор
 
 * Figma
-* Картинки
+* Технологии 
+* GitHubPages 
 
 **Figma**
 
-* [Ссылка на макет в Figma](https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4)
+* https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4
 
-**Картинки**
+**Технологии**
 
-Доставать картинки предстоит из Фигмы. Это расхожая практика, поэтому полезно потренироваться.
-Не забудьте [оптимизировать картинки](https://tinypng.com/), чтобы ваш сайт загружался быстрее.
+* html, css, javascript 
 
-Удачи!
+**GitHubPages**
