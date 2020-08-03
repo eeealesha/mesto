@@ -13,24 +13,22 @@ let profileName = profile.querySelector(".profile__title");
 let profileJob = profile.querySelector(".profile__subtitle");
 
 function popupOpen() {
-    popup.classList.remove("popup_closed");
-    formName.value = profileName.textContent;
-    formJob.value = profileJob.textContent;
+  formName.value = profileName.textContent;
+  formJob.value = profileJob.textContent;
+  popup.classList.remove("popup_closed");
 }
 
 function popupClose() {
-    popup.classList.add("popup_closed");
+  popup.classList.add("popup_closed");
+}
+
+function formSubmitHandler(evt) {
+  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+  profileName.textContent = formName.value;
+  profileJob.textContent = formJob.value;
+  popupClose();
 }
 
 buttonEdit.addEventListener("click", popupOpen);
 buttonClose.addEventListener("click", popupClose);
-
-function formSubmitHandler (evt) {
-    evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
-    profileName.textContent = formName.value;
-    profileJob.textContent = formJob.value;
-    popupClose();
-}
-
-formElement.addEventListener('submit', formSubmitHandler);
-
+formElement.addEventListener("submit", formSubmitHandler);

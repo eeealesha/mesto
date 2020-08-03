@@ -1,10 +1,32 @@
 .button_type_close {
+  padding: 0;
+  margin: 0;
   width: 40px;
   height: 40px;
   position: absolute;
-  top: -30px;
-  right: -30px;
-  background-image: url(../../../images/cross.png);
+  top: -45px;
+  right: -45px;
   border: 0;
+}
+
+.button_type_close:before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 100%;
+  height: 4px;
+  background-color: white;
+  transform: rotate(-45deg);
+}
+
+.button_type_close:after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 20px;
+  width: 100%;
+  height: 4px;
+  background-color:white;
   transform: rotate(45deg);
 }

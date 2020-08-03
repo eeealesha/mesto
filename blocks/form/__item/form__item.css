@@ -6,6 +6,6 @@
   width: 100%;
 }
 
-.form__item:last-of-type {
+.form__item:last-child {
   margin-top: 30px;
 }
