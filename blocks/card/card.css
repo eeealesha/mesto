@@ -3,4 +3,5 @@
     background-image: url("./../../images/Rectangle.png");
     background-repeat: no-repeat;
     max-width: 282px;
+    position: relative;
 }

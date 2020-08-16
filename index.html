@@ -37,103 +37,7 @@
           <button class="button button_type_add" type="button"></button>
         </section>
         <section class="photo-grid">
-          <ul class="photo-grid__list">
-            <li>
-              <div class="card">
-                <img
-                  class="photo-grid__item"
-                  src="./images/card-picture-1.png"
-                  alt="Карачаевск"
-                />
-                <div class="photo-grid__caption">
-                  <h2 class="photo-grid__title">Карачаевск</h2>
-                  <button
-                    class="button button_type_like"
-                    type="button"
-                  ></button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="card">
-                <img
-                  class="photo-grid__item"
-                  src="./images/card-picture-2.png"
-                  alt="Гора-Эльбрус"
-                />
-                <div class="photo-grid__caption">
-                  <h2 class="photo-grid__title">Гора-Эльбрус</h2>
-                  <button
-                    class="button button_type_like"
-                    type="button"
-                  ></button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="card">
-                <img
-                  class="photo-grid__item"
-                  src="./images/card-picture-3.png"
-                  alt="Домбай"
-                />
-                <div class="photo-grid__caption">
-                  <h2 class="photo-grid__title">Домбай</h2>
-                  <button
-                    class="button button_type_like"
-                    type="button"
-                  ></button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="card">
-                <img
-                  class="photo-grid__item"
-                  src="./images/card-picture-1.png"
-                  alt="Гора-Эльбрус"
-                />
-                <div class="photo-grid__caption">
-                  <h2 class="photo-grid__title">Гора-Эльбрус</h2>
-                  <button
-                    class="button button_type_like"
-                    type="button"
-                  ></button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="card">
-                <img
-                  class="photo-grid__item"
-                  src="./images/card-picture-2.png"
-                  alt="Домбай"
-                />
-                <div class="photo-grid__caption">
-                  <h2 class="photo-grid__title">Домбай</h2>
-                  <button
-                    class="button button_type_like"
-                    type="button"
-                  ></button>
-                </div>
-              </div>
-            </li>
-            <li>
-              <div class="card">
-                <img
-                  class="photo-grid__item"
-                  src="./images/card-picture-3.png"
-                  alt="Карачаево-Черкесия"
-                />
-                <div class="photo-grid__caption">
-                  <h2 class="photo-grid__title">Карачаево-Черкесия</h2>
-                  <button
-                    class="button button_type_like"
-                    type="button"
-                  ></button>
-                </div>
-              </div>
-            </li>
+          <ul class="photo-grid__list"> 
           </ul>
         </section>
       </main>
@@ -163,7 +67,51 @@
           </button>
         </form>
       </div>
+      <div class="popup popup_type_add popup_closed">
+        <form class="popup__container popup__container_type_add" name="card">
+          <button class="button button_type_close" type="button"></button>
+          <h2 class="popup__title">Новое место</h2>
+          <fieldset class="form">
+            <input
+              type="text"
+              class="form__item form__item_el_place"
+              id="place"
+              name="place"
+              placeholder="Название"
+            />
+            <input
+              type="text"
+              class="form__item form__item_el_img"
+              id="img"
+              name="img"
+              placeholder="Ссылка на картинку"
+            />
+          </fieldset>
+          <button class="button button_type_submit">
+            Создать
+          </button>
+        </form>
+      </div>
     </div>
+    <template id="cardTemplate">
+      <li>
+        <div class="card">
+        <button class="button button_type_delete" type="button"></button>
+          <img
+            class="photo-grid__item"
+            src="${initialCard.link}"
+            alt="Карачаевск"
+          />
+          <div class="photo-grid__caption">
+            <h2 class="photo-grid__title">${initialCard.name}</h2>
+            <button
+              class="button button_type_like"
+              type="button"
+            ></button>
+          </div>
+        </div>
+      </li>
+    </template>
     <script src="./script/index.js"></script>
   </body>
 </html>
