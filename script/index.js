@@ -18,8 +18,8 @@ let popupAdd = document.querySelector(".popup_type_add");
 let addCardForm = popupAdd.querySelector(".popup__container_type_add");
 let buttonCloseAdd = popupAdd.querySelector(".button_type_close");
 
-let figPopup = document.querySelector(".popup_type_fig");
-let buttonCloseFig = figPopup.querySelector(".button_type_close");
+let popupFig = document.querySelector(".popup_type_fig");
+let buttonCloseFig = popupFig.querySelector(".button_type_close");
 
 const initialCards = [
   {
@@ -57,6 +57,7 @@ const initialCards = [
 const cardsContainer = document.querySelector(".photo-grid__list");
 
 const addCardToContainer = initialCard => {
+
   const cardElement = document.querySelector(".cardTemplate").content.cloneNode(true)
 
   cardElement.querySelector(".photo-grid__title").textContent = initialCard.name
@@ -75,7 +76,7 @@ const addCardToContainer = initialCard => {
   cardElement.querySelector(".photo-grid__item").addEventListener("click", event => {
     document.querySelector(".popup__img").src = initialCard.link
     document.querySelector(".popup__figcaption").textContent = initialCard.name
-    figPopup.classList.toggle("popup_closed")
+    popupFig.classList.toggle("popup_closed")
   })
 
   cardsContainer.prepend(cardElement)
@@ -83,13 +84,13 @@ const addCardToContainer = initialCard => {
 
 initialCards.forEach(addCardToContainer)
 
-addCardForm.addEventListener("submit", event =>{
+addCardForm.addEventListener("submit", event => {
 
   event.preventDefault()
 
   const NewCard = {
-    name:" ",
-    link:" "
+    name: " ",
+    link: " "
   }
 
   NewCard.name = addCardForm.querySelector(".form__item_el_place").value;
@@ -102,7 +103,7 @@ addCardForm.addEventListener("submit", event =>{
   popupAddClose()
 })
 
-function popupOpen() { 
+function popupOpen() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
   popup.classList.remove("popup_closed");
@@ -121,7 +122,7 @@ function popupAddClose() {
 }
 
 function popupFigClose() {
-  figPopup.classList.add("popup_closed");
+  popupFig.classList.add("popup_closed");
 }
 
 function formSubmitHandler(evt) {
