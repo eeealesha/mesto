@@ -56,10 +56,16 @@ const initialCards = [
 const cardsContainer = document.querySelector(".photo-grid__list");
 
 const addCardToContainer = initialCard => {
-  const cardElement = document.querySelector("#cardTemplate").content.cloneNode(true)
+  const cardElement = document.querySelector(".cardTemplate").content.cloneNode(true)
 
   cardElement.querySelector(".photo-grid__title").textContent = initialCard.name
   cardElement.querySelector(".photo-grid__item").src = initialCard.link
+
+  cardElement.querySelector(".button_type_delete").addEventListener("click", event => {
+    const card = event.target.closest(".card__element")
+    card.remove()
+  })
+
   cardsContainer.prepend(cardElement)
 }
 
