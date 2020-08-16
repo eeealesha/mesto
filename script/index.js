@@ -12,13 +12,14 @@ let buttonEdit = profile.querySelector(".button_type_edit");
 let profileName = profile.querySelector(".profile__title");
 let profileJob = profile.querySelector(".profile__subtitle");
 
-let buttonLike = document.querySelector(".button_type_like");
-
 let buttonAdd = document.querySelector(".button_type_add");
 
 let popupAdd = document.querySelector(".popup_type_add");
 let addCardForm = popupAdd.querySelector(".popup__container_type_add");
 let buttonCloseAdd = popupAdd.querySelector(".button_type_close");
+
+let figPopup = document.querySelector(".popup_type_fig");
+let buttonCloseFig = figPopup.querySelector(".button_type_close");
 
 const initialCards = [
   {
@@ -66,6 +67,17 @@ const addCardToContainer = initialCard => {
     card.remove()
   })
 
+  cardElement.querySelector(".button_type_like").addEventListener("click", event => {
+    const button = event.target.closest(".button")
+    button.classList.toggle("button_liked")
+  })
+
+  cardElement.querySelector(".photo-grid__item").addEventListener("click", event => {
+    document.querySelector(".popup__img").src = initialCard.link
+    document.querySelector(".popup__figcaption").textContent = initialCard.name
+    figPopup.classList.toggle("popup_closed")
+  })
+
   cardsContainer.prepend(cardElement)
 }
 
@@ -108,6 +120,10 @@ function popupAddClose() {
   popupAdd.classList.add("popup_closed");
 }
 
+function popupFigClose() {
+  figPopup.classList.add("popup_closed");
+}
+
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   profileName.textContent = formName.value;
@@ -115,6 +131,7 @@ function formSubmitHandler(evt) {
   popupClose();
 }
 
+buttonCloseFig.addEventListener("click", popupFigClose);
 buttonAdd.addEventListener("click", popupAddOpen);
 buttonEdit.addEventListener("click", popupOpen);
 buttonClose.addEventListener("click", popupClose);

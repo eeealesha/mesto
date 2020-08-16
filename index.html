@@ -37,8 +37,7 @@
           <button class="button button_type_add" type="button"></button>
         </section>
         <section class="photo-grid">
-          <ul class="photo-grid__list"> 
-          </ul>
+          <ul class="photo-grid__list"></ul>
         </section>
       </main>
       <footer class="footer">
@@ -92,22 +91,30 @@
           </button>
         </form>
       </div>
+      <div class="popup popup_type_fig popup_closed">
+        <figure class="popup__figure">
+          <button class="button button_type_close" type="button"></button>
+          <img
+            class="popup__img"
+            src="#"
+            alt="Картинка, которая иллюстрирует название"
+          />
+          <figcaption class="popup__figcaption">#</figcaption>
+        </figure>
+      </div>
     </div>
     <template class="cardTemplate">
       <li class="card__element">
         <div class="card">
-        <button class="button button_type_delete" type="button"></button>
+          <button class="button button_type_delete" type="button"></button>
           <img
             class="photo-grid__item"
-            src="${initialCard.link}"
-            alt="Карачаевск"
+            src="#"
+            alt="Картинка, которая иллюстрирует название"
           />
           <div class="photo-grid__caption">
-            <h2 class="photo-grid__title">${initialCard.name}</h2>
-            <button
-              class="button button_type_like"
-              type="button"
-            ></button>
+            <h2 class="photo-grid__title">#</h2>
+            <button class="button button_type_like" type="button"></button>
           </div>
         </div>
       </li>
