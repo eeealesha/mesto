@@ -101,41 +101,33 @@ addCardForm.addEventListener("submit", event => {
 
   addCardForm.reset()
 
-  popupAddClose()
+  Close(popupAdd)
 })
+
+function Open(pop) {
+  pop.classList.remove("popup_closed");
+}
+
+function Close(pop) {
+  pop.classList.add("popup_closed");
+}
 
 function popupOpen() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
-  popup.classList.remove("popup_closed");
-}
-
-function popupAddOpen() {
-  popupAdd.classList.remove("popup_closed");
-}
-
-function popupClose() {
-  popup.classList.add("popup_closed");
-}
-
-function popupAddClose() {
-  popupAdd.classList.add("popup_closed");
-}
-
-function popupFigClose() {
-  popupFig.classList.add("popup_closed");
+  Open(popup);
 }
 
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   profileName.textContent = formName.value;
   profileJob.textContent = formJob.value;
-  popupClose();
+  Close(popup);
 }
 
-buttonCloseFig.addEventListener("click", popupFigClose);
-buttonAdd.addEventListener("click", popupAddOpen);
+buttonCloseFig.addEventListener("click", function(){Close(popupFig)});
+buttonAdd.addEventListener("click", function(){Open(popupAdd)});
 buttonEdit.addEventListener("click", popupOpen);
-buttonClose.addEventListener("click", popupClose);
-buttonCloseAdd.addEventListener("click", popupAddClose);
+buttonClose.addEventListener("click", function(){Close(popup)});
+buttonCloseAdd.addEventListener("click", function(){Close(popupAdd)});
 formElement.addEventListener("submit", formSubmitHandler);
