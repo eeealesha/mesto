@@ -1,5 +1,5 @@
-let popup = document.querySelector(".popup");
-let buttonClose = popup.querySelector(".button_type_close");
+let popup = document.querySelector(".popup_type_profile");
+const buttonClose = popup.querySelector(".button_type_close");
 
 let formName = popup.querySelector(".form__item_el_name");
 let formJob = popup.querySelector(".form__item_el_job");
@@ -7,19 +7,19 @@ let formJob = popup.querySelector(".form__item_el_job");
 let formElement = document.querySelector(".popup__container");
 
 let profile = document.querySelector(".profile");
-let buttonEdit = profile.querySelector(".button_type_edit");
+const buttonEdit = profile.querySelector(".button_type_edit");
 
 let profileName = profile.querySelector(".profile__title");
 let profileJob = profile.querySelector(".profile__subtitle");
 
-let buttonAdd = document.querySelector(".button_type_add");
+const buttonAdd = document.querySelector(".button_type_add");
 
 let popupAdd = document.querySelector(".popup_type_add");
 let addCardForm = popupAdd.querySelector(".popup__container_type_add");
-let buttonCloseAdd = popupAdd.querySelector(".button_type_close");
+const buttonCloseAdd = popupAdd.querySelector(".button_type_close");
 
 let popupFig = document.querySelector(".popup_type_fig");
-let buttonCloseFig = popupFig.querySelector(".button_type_close");
+const buttonCloseFig = popupFig.querySelector(".button_type_close");
 
 const initialCards = [
   {
@@ -56,6 +56,7 @@ const initialCards = [
 
 const cardsContainer = document.querySelector(".photo-grid__list");
 
+
 const addCardToContainer = initialCard => {
 
   const cardElement = document.querySelector(".cardTemplate").content.cloneNode(true)
@@ -88,15 +89,15 @@ addCardForm.addEventListener("submit", event => {
 
   event.preventDefault()
 
-  const NewCard = {
+  const newCard = {
     name: " ",
     link: " "
   }
 
-  NewCard.name = addCardForm.querySelector(".form__item_el_place").value;
-  NewCard.link = addCardForm.querySelector(".form__item_el_img").value;
+  newCard.name = addCardForm.querySelector(".form__item_el_place").value;
+  newCard.link = addCardForm.querySelector(".form__item_el_img").value;
 
-  addCardToContainer(NewCard)
+  addCardToContainer(newCard)
 
   addCardForm.reset()
 
