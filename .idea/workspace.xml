@@ -23,6 +23,17 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+  </component>
+  <component name="RunManager">
+    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/script/index.js" working-dir="$PROJECT_DIR$/script">
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Node.js.index.js" />
+      </list>
+    </recent_temporary>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -34,7 +45,7 @@
       <updated>1597618671518</updated>
       <workItem from="1597618674636" duration="45000" />
       <workItem from="1597619126725" duration="49000" />
-      <workItem from="1597684958970" duration="5950000" />
+      <workItem from="1597684958970" duration="6908000" />
     </task>
     <servers />
   </component>
@@ -50,6 +61,10 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1597689089682" />
+    <state x="229" y="89" key="SettingsEditor" timestamp="1597698999778">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1597698999778" />
     <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1597685726883">
       <screen x="0" y="0" width="1440" height="900" />
     </state>
