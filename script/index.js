@@ -56,10 +56,11 @@ const initialCards = [
 
 const cardsContainer = document.querySelector(".photo-grid__list");
 
+const card = document.querySelector(".cardTemplate").content;
 
 const addCardToContainer = initialCard => {
 
-  const cardElement = document.querySelector(".cardTemplate").content.cloneNode(true)
+  const cardElement = card.cloneNode(true);
 
   cardElement.querySelector(".photo-grid__title").textContent = initialCard.name
   cardElement.querySelector(".photo-grid__item").src = initialCard.link
@@ -118,6 +119,12 @@ function popupOpen() {
   Open(popup);
 }
 
+function popupAddOpen() {
+  addCardForm.querySelector(".form__item_el_place").value = "";
+  addCardForm.querySelector(".form__item_el_img").value = "";
+  Open(popupAdd)
+}
+
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   profileName.textContent = formName.value;
@@ -126,7 +133,7 @@ function formSubmitHandler(evt) {
 }
 
 buttonCloseFig.addEventListener("click", function(){Close(popupFig)});
-buttonAdd.addEventListener("click", function(){Open(popupAdd)});
+buttonAdd.addEventListener("click", popupAddOpen);
 buttonEdit.addEventListener("click", popupOpen);
 buttonClose.addEventListener("click", function(){Close(popup)});
 buttonCloseAdd.addEventListener("click", function(){Close(popupAdd)});
