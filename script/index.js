@@ -1,16 +1,16 @@
 const popup = document.querySelector(".popup_type_profile");
 const buttonClose = popup.querySelector(".button_type_close");
 
-let formName = popup.querySelector(".form__item_el_name");
-let formJob = popup.querySelector(".form__item_el_job");
+const formName = popup.querySelector(".form__item_el_name");
+const formJob = popup.querySelector(".form__item_el_job");
 
 const formElement = document.querySelector(".popup__container");
 
 const profile = document.querySelector(".profile");
 const buttonEdit = profile.querySelector(".button_type_edit");
 
-let profileName = profile.querySelector(".profile__title");
-let profileJob = profile.querySelector(".profile__subtitle");
+const profileName = profile.querySelector(".profile__title");
+const profileJob = profile.querySelector(".profile__subtitle");
 
 const buttonAdd = document.querySelector(".button_type_add");
 
@@ -58,6 +58,12 @@ const cardsContainer = document.querySelector(".photo-grid__list");
 
 const card = document.querySelector(".cardTemplate").content;
 
+const popupImg = document.querySelector(".popup__img");
+const popupFigCap = document.querySelector(".popup__figcaption");
+
+const formItemPlace = addCardForm.querySelector(".form__item_el_place");
+const formItemImg = addCardForm.querySelector(".form__item_el_img");
+
 const addCardToContainer = initialCard => {
 
   const cardElement = card.cloneNode(true);
@@ -76,9 +82,9 @@ const addCardToContainer = initialCard => {
   })
 
   cardElement.querySelector(".photo-grid__item").addEventListener("click", event => {
-    document.querySelector(".popup__img").src = initialCard.link
-    document.querySelector(".popup__figcaption").textContent = initialCard.name
-    popupFig.classList.toggle("popup_closed")
+    popupImg.src = initialCard.link
+    popupFigCap.textContent = initialCard.name
+    openPopup(popupFig)
   })
 
   cardsContainer.prepend(cardElement)
@@ -95,46 +101,46 @@ addCardForm.addEventListener("submit", event => {
     link: " "
   }
 
-  newCard.name = addCardForm.querySelector(".form__item_el_place").value;
-  newCard.link = addCardForm.querySelector(".form__item_el_img").value;
+  newCard.name = formItemPlace.value;
+  newCard.link = formItemImg.value;
 
   addCardToContainer(newCard)
 
   addCardForm.reset()
 
-  Close(popupAdd)
+  closePopup(popupAdd)
 })
 
-function Open(pop) {
+function openPopup(pop) {
   pop.classList.remove("popup_closed");
 }
 
-function Close(pop) {
+function closePopup(pop) {
   pop.classList.add("popup_closed");
 }
 
-function popupOpen() {
+function openProfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
-  Open(popup);
+  openPopup(popup);
 }
 
 function popupAddOpen() {
-  addCardForm.querySelector(".form__item_el_place").value = "";
-  addCardForm.querySelector(".form__item_el_img").value = "";
-  Open(popupAdd)
+  formItemPlace.value = "";
+  formItemImg.value = "";
+  openPopup(popupAdd)
 }
 
 function formSubmitHandler(evt) {
   evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
   profileName.textContent = formName.value;
   profileJob.textContent = formJob.value;
-  Close(popup);
+  closePopup(popup);
 }
 
-buttonCloseFig.addEventListener("click", function(){Close(popupFig)});
+buttonCloseFig.addEventListener("click", function(){closePopup(popupFig)});
 buttonAdd.addEventListener("click", popupAddOpen);
-buttonEdit.addEventListener("click", popupOpen);
-buttonClose.addEventListener("click", function(){Close(popup)});
-buttonCloseAdd.addEventListener("click", function(){Close(popupAdd)});
+buttonEdit.addEventListener("click", openProfilePopup);
+buttonClose.addEventListener("click", function(){closePopup(popup)});
+buttonCloseAdd.addEventListener("click", function(){closePopup(popupAdd)});
 formElement.addEventListener("submit", formSubmitHandler);
