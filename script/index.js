@@ -125,7 +125,7 @@ function openProfilePopup() {
   openPopup(popup);
 }
 
-function popupAddOpen() {
+function openAddPopup() {
   formItemPlace.value = "";
   formItemImg.value = "";
   openPopup(popupAdd)
@@ -139,7 +139,7 @@ function formSubmitHandler(evt) {
 }
 
 buttonCloseFig.addEventListener("click", function(){closePopup(popupFig)});
-buttonAdd.addEventListener("click", popupAddOpen);
+buttonAdd.addEventListener("click", openAddPopup);
 buttonEdit.addEventListener("click", openProfilePopup);
 buttonClose.addEventListener("click", function(){closePopup(popup)});
 buttonCloseAdd.addEventListener("click", function(){closePopup(popupAdd)});
