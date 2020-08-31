@@ -3,3 +3,7 @@
     max-height: 75vh;
     object-fit: cover;
 }
+
+.popup__img:hover {
+    cursor: default;
+}
