@@ -1,11 +1,27 @@
 const validationInputs = {
     formSelector: '.popup__container',
-    fieldsetSelector: '.form',
+    fieldSelector: '.form',
     inputSelector: '.form__item',
     submitButtonSelector: '.button_type_submit',
     inactiveButtonClass: '.button_inactive',
     inputErrorClass: '.form__item_error',
     errorClass: '.form__error-text_active'
+}
+
+function hasInvalidInput(formInputs) {
+    return formInputs.some(inputElement => {
+        return !inputElement.validity.valid;
+    })
+}
+
+function toggleButtonState(formInputs, formSubmitButton) {
+    if (hasInvalidInput(formInputs)) {
+        formSubmitButton.disabled = true;
+        formSubmitButton.classList.add(validationInputs.inactiveButtonClass);
+    } else {
+        formSubmitButton.disabled = false;
+        formSubmitButton.classList.remove(validationInputs.inactiveButtonClass);
+    }
 }
 
 function findError(formElement, inputElement) {
@@ -26,27 +42,11 @@ function hideError(formElement, inputElement) {
     errorElement.classList.remove(validationInputs.errorClass);
 }
 
-function hasInvalidInput(formInputs) {
-    return formInputs.some(inputElement => {
-        return !inputElement.validity.valid;
-    })
-}
-
 function checkInputValidity(formElement, inputElement) {
     if (!inputElement.validity.valid) {
         showError(formElement, inputElement, inputElement.validationMessage);
     } else {
         hideError(formElement, inputElement);
-    }
-}
-
-function toggleButtonState(formInputs, formSubmitButton) {
-    if (hasInvalidInput(formInputs)) {
-        formSubmitButton.disabled = true;
-        formSubmitButton.classList.add(validationInputs.inactiveButtonClass);
-    } else {
-        formSubmitButton.disabled = false;
-        formSubmitButton.classList.remove(validationInputs.inactiveButtonClass);
     }
 }
 
@@ -77,13 +77,13 @@ function setEventListeners(formElement) {
     })
 }
 
-function enableValidation(settingsObject) {
-    const formsList = Array.from(document.querySelectorAll(settingsObject.formSelector));
+function enableValidation(settObj) {
+    const formsList = Array.from(document.querySelectorAll(settObj.formSelector));
     formsList.forEach(formElement => {
         formElement.addEventListener('submit', function (evt) {
             evt.preventDefault();
         })
-        const fieldsetList = Array.from(formElement.querySelectorAll(settingsObject.fieldsetSelector));
+        const fieldsetList = Array.from(formElement.querySelectorAll(settObj.fieldSelector));
         fieldsetList.forEach(fieldset => {
             setEventListeners(fieldset);
         })
