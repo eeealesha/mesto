@@ -23,7 +23,7 @@
 @import url("../blocks/button/_type/button_type_submit.css");
 @import url("../blocks/button/_type/button_type_delete.css");
 @import url("../blocks/button/_liked/button_liked.css");
-
+@import url("../blocks/button/_inactive/button_inactive.css");
 
 @import url("../blocks/photo-grid/photo-grid.css");
 @import url("../blocks/photo-grid/__list/photo-grid__list.css");
@@ -47,3 +47,7 @@
 
 @import url("../blocks/form/form.css");
 @import url("../blocks/form/__item/form__item.css");
+@import url("../blocks/form/__item/_error/form__item_error.css");
+@import url("../blocks/form/__item-errorText/form__item-errorText.css");
+@import url("../blocks/form/__item-errorText/_active/form__item-errorText_active.css");
+
