@@ -3,7 +3,7 @@ const validationInputs = {
     fieldSelector: '.form',
     inputSelector: '.form__item',
     submitButtonSelector: '.button_type_submit',
-    inactiveButtonClass: '.button_inactive',
+    inactiveButtonClass: 'button_inactive',
     inputErrorClass: '.form__item_error',
     errorClass: '.form__error-text_active'
 }
@@ -71,6 +71,7 @@ function openCheckValidity(formElement) {
 function setEventListeners(formElement) {
     const formInputs = Array.from(formElement.querySelectorAll(validationInputs.inputSelector));
     const formSubmitButton = formElement.querySelector(validationInputs.submitButtonSelector);
+    console.log(formSubmitButton)
     toggleButtonState(formInputs, formSubmitButton);
     formInputs.forEach(inputElement => {
         inputElement.addEventListener('input', inputEventListener);
@@ -81,9 +82,10 @@ function enableValidation(settObj) {
     const formsList = Array.from(document.querySelectorAll(settObj.formSelector));
     formsList.forEach(formElement => {
         formElement.addEventListener('submit', function (evt) {
-            evt.preventDefault();
+            evt.preventDefault(formSubmitButton);
         })
         const fieldsetList = Array.from(formElement.querySelectorAll(settObj.fieldSelector));
+        console.log(fieldsetList)
         fieldsetList.forEach(fieldset => {
             setEventListeners(fieldset);
         })
