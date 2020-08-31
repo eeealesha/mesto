@@ -8,6 +8,15 @@ const validationInputs = {
     errorClass: 'form__error-text_active'
 }
 
+function openCheckInputValidity(formElement) {
+    const formInputs = Array.from(formElement.querySelectorAll(validationInputs.inputSelector));
+    const formSubmitButton = formElement.querySelector(validationInputs.submitButtonSelector);
+    formInputs.forEach((inputElement) => {
+        checkInputValidity(formElement, inputElement);
+    });
+    toggleButtonState(formInputs, formSubmitButton);
+};
+
 function hasInvalidInput(formInputs) {
     return formInputs.some(inputElement => {
         return !inputElement.validity.valid;
@@ -29,11 +38,7 @@ function findError(formElement, inputElement) {
 }
 
 function showError(formElement, inputElement, errorMessage) {
-    console.log(formElement)
-    console.log(inputElement)
-    console.log(errorMessage)
     const errorElement = findError(formElement, inputElement);
-    console.log(errorElement)
     inputElement.classList.add(validationInputs.inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(validationInputs.errorClass);
@@ -62,15 +67,6 @@ function inputEventListener(evt) {
     checkInputValidity(formElement, inputElement);
     toggleButtonState(formInputs, formSubmitButton);
 }
-
-function openCheckValidity(formElement) {
-    const formInputs = Array.from(formElement.querySelectorAll(validationInputs.inputSelector));
-    const formSubmitButton = formElement.querySelector(validationInputs.submitButtonSelector);
-    formInputs.forEach((inputElement) => {
-        checkInputValidity(formElement, inputElement);
-    });
-    toggleButtonState(formInputs, formSubmitButton);
-};
 
 function setEventListeners(formElement) {
     const formInputs = Array.from(formElement.querySelectorAll(validationInputs.inputSelector));

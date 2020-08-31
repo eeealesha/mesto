@@ -1,3 +1,5 @@
+const allPopup = document.querySelectorAll(".popup");
+
 const popup = document.querySelector(".popup_type_profile");
 const buttonClose = popup.querySelector(".button_type_close");
 
@@ -85,6 +87,7 @@ const addCardToContainer = initialCard => {
         popupImg.src = initialCard.link
         popupFigCap.textContent = initialCard.name
         openPopup(popupFig)
+        popupFig.addEventListener("click", closePopupOverlay);
     })
 
     cardsContainer.prepend(cardElement)
@@ -122,13 +125,19 @@ function closePopup(pop) {
 function openProfilePopup() {
     formName.value = profileName.textContent;
     formJob.value = profileJob.textContent;
+    openCheckInputValidity(formElement);
     openPopup(popup);
+    popup.addEventListener("click", closePopupOverlay);
+    document.addEventListener("keydown", keyPress);
 }
 
 function openAddPopup() {
     formItemPlace.value = "";
     formItemImg.value = "";
+    openCheckInputValidity(addCardForm);
     openPopup(popupAdd)
+    popupAdd.addEventListener("click", closePopupOverlay);
+    document.addEventListener("keydown", keyPress);
 }
 
 function formSubmitHandler(evt) {
@@ -138,9 +147,29 @@ function formSubmitHandler(evt) {
     closePopup(popup);
 }
 
+const closePopupOverlay = function(event){
+    if(event.target !== event.currentTarget) return
+    allPopup.forEach(pop =>{
+        closePopup(pop);
+        pop.removeEventListener("click", closePopupOverlay);
+        
+    })
+}
+
+const keyPress = function(e){
+    if(e.key === "Escape") {
+        allPopup.forEach(pop =>{
+            closePopup(pop);
+            pop.removeEventListener("click", keyPress);
+            
+        })}
+}
+   
 buttonCloseFig.addEventListener("click", function(){closePopup(popupFig)});
 buttonAdd.addEventListener("click", openAddPopup);
 buttonEdit.addEventListener("click", openProfilePopup);
 buttonClose.addEventListener("click", function(){closePopup(popup)});
 buttonCloseAdd.addEventListener("click", function(){closePopup(popupAdd)});
 formElement.addEventListener("submit", formSubmitHandler);
+
+
