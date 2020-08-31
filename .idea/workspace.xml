@@ -20,8 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fe506b97-c1af-470b-95b4-a17650c282d3" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/blocks/button/_inactive/button_inactive.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/button/_inactive/button_inactive.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/button/_inactive/button_inactive.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/__item-errorText/_active/form__item-errorText_active.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/form/__error-text/_active/form__error-text_active.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/blocks/form/__item-errorText/form__item-errorText.css" beforeDir="false" afterPath="$PROJECT_DIR$/blocks/form/__error-text/form__error-text.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pages/index.css" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/script/validation.js" beforeDir="false" afterPath="$PROJECT_DIR$/script/validation.js" afterDir="false" />
@@ -86,7 +88,7 @@
       <workItem from="1598386257201" duration="105000" />
       <workItem from="1598386417769" duration="213000" />
       <workItem from="1598386810938" duration="332000" />
-      <workItem from="1598858736335" duration="3347000" />
+      <workItem from="1598858736335" duration="4742000" />
     </task>
     <servers />
   </component>

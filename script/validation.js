@@ -1,10 +1,9 @@
-export
-
 enableValidation({
-    formSelector: '.popup__form',
-    inputSelector: '.popup__input',
-    submitButtonSelector: '.popup__button',
-    inactiveButtonClass: 'popup__button_disabled',
+    formSelector: 'popup__container',
+    inputSelector: 'form__item',
+    submitButtonSelector: 'button_type_submit',
+    inactiveButtonClass: 'button_inactive',
     inputErrorClass: 'popup__input_type_error',
     errorClass: 'popup__error_visible'
 });
+

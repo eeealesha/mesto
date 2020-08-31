@@ -57,7 +57,7 @@
                         minlength="2"
                         maxlength="40"
                 />
-                <span class="form__item-errorText" id="profile-name-errorText"></span>
+                <div class="form__error-text" id="profile-name-errorText"></div>
                 <input
                         type="text"
                         class="form__item form__item_el_job"
@@ -67,9 +67,9 @@
                         minlength="2"
                         maxlength="200"
                 />
-                <span class="form__item-errorText" id="profile-job-errorText"></span>
+                <div class="form__error-text" id="profile-job-errorText"></div>
             </fieldset>
-            <button class="button button_type_submit">
+            <button class="button button_type_submit button_inactive">
                 Сохранить
             </button>
         </form>
@@ -89,7 +89,7 @@
                         minlength="1"
                         maxlength="30"
                 />
-                <span class="form__item-errorText" id="card-place-errorText"></span>
+                <div class="form__error-text" id="card-place-errorText"></div>
                 <input
                         type="url"
                         class="form__item form__item_el_img"
@@ -98,9 +98,9 @@
                         placeholder="Ссылка на картинку"
                         required
                 />
-                <span class="form__item-errorText" id="card-url-errorText"></span>
+                <div class="form__error-text" id="card-url-errorText"></div>
             </fieldset>
-            <button class="button button_type_submit">
+            <button class="button button_type_submit button_inactive">
                 Создать
             </button>
         </form>
