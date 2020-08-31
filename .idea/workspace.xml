@@ -1,29 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+  <component name="BranchesTreeState">
+    <expand>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="LOCAL_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+      <path>
+        <item name="ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="REMOTE_ROOT" type="e8cecc67:BranchNodeDescriptor" />
+        <item name="GROUP_NODE:origin" type="e8cecc67:BranchNodeDescriptor" />
+      </path>
+    </expand>
+    <select />
+  </component>
   <component name="ChangeListManager">
-    <list default="true" id="fe506b97-c1af-470b-95b4-a17650c282d3" name="Default Changelist" comment="" />
+    <list default="true" id="fe506b97-c1af-470b-95b4-a17650c282d3" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/blocks/form/__item-errorText/_active/form__item-errorText_active.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/blocks/form/__item-errorText/form__item-errorText.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/script/validation.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/script/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/script/index.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="HTML File" />
+        <option value="JavaScript File" />
+        <option value="CSS File" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1gCVg2bvORjqHCyMSsY5DR3FOIw" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="DefaultHtmlFileTemplate" value="HTML File" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="dart.analysis.tool.window.visible" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="configurable.group.language" />
+    <property name="list.type.of.created.stylesheet" value="CSS" />
+    <property name="settings.editor.selected.configurable" value="preferences.lookFeel" />
+    <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="RunManager">
-    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="$PROJECT_DIR$/script/index.js" working-dir="$PROJECT_DIR$/script">
+    <configuration name="index.js" type="NodeJSConfigurationType" temporary="true" nameIsGenerated="true" path-to-js-file="index.js" working-dir="$PROJECT_DIR$/script">
       <method v="2" />
     </configuration>
     <recent_temporary>
@@ -43,12 +83,28 @@
       <workItem from="1597618674636" duration="45000" />
       <workItem from="1597619126725" duration="49000" />
       <workItem from="1597684958970" duration="7141000" />
-      <workItem from="1597768851941" duration="1059000" />
+      <workItem from="1597768851941" duration="1444000" />
+      <workItem from="1598386257201" duration="105000" />
+      <workItem from="1598386417769" duration="213000" />
+      <workItem from="1598386810938" duration="332000" />
+      <workItem from="1598858736335" duration="2336000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="WindowStateProjectService">
     <state x="354" y="135" key="#Inspections" timestamp="1597687085506">
@@ -59,13 +115,15 @@
       <screen x="0" y="0" width="1440" height="900" />
     </state>
     <state x="184" y="112" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.0.1440.900@0.0.1440.900" timestamp="1597689089682" />
-    <state x="229" y="89" key="SettingsEditor" timestamp="1597698999778">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="229" y="91" key="SettingsEditor" timestamp="1598874210168">
+      <screen x="0" y="23" width="1440" height="790" />
     </state>
-    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1597698999778" />
-    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1597685726883">
-      <screen x="0" y="0" width="1440" height="900" />
+    <state x="229" y="89" key="SettingsEditor/0.0.1440.900@0.0.1440.900" timestamp="1598386297510" />
+    <state x="229" y="91" key="SettingsEditor/0.23.1440.790@0.23.1440.790" timestamp="1598874210168" />
+    <state x="385" y="195" width="670" height="594" key="search.everywhere.popup" timestamp="1598386436862">
+      <screen x="0" y="23" width="1440" height="790" />
     </state>
     <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1597685726883" />
+    <state x="385" y="195" width="670" height="594" key="search.everywhere.popup/0.23.1440.790@0.23.1440.790" timestamp="1598386436862" />
   </component>
 </project>
