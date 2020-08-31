@@ -133,7 +133,7 @@ function openProfilePopup() {
   openCheckInputValidity(formElement);
   openPopup(popup);
   popup.addEventListener("click", closePopupOverlay);
-  document.addEventListener("keydown", keyPress);
+  document.addEventListener("keydown", pressKey);
 }
 
 function openAddPopup() {
@@ -142,11 +142,11 @@ function openAddPopup() {
   openCheckInputValidity(addCardForm);
   openPopup(popupAdd);
   popupAdd.addEventListener("click", closePopupOverlay);
-  document.addEventListener("keydown", keyPress);
+  document.addEventListener("keydown", pressKey);
 }
 
-function formSubmitHandler(evt) {
-  evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
+function SubmitformHandler(evt) {
+  evt.preventDefault(); 
   profileName.textContent = formName.value;
   profileJob.textContent = formJob.value;
   closePopup(popup);
@@ -160,11 +160,11 @@ const closePopupOverlay = function (event) {
   });
 };
 
-const keyPress = function (e) {
+const pressKey = function (e) {
   if (e.key === "Escape") {
     allPopup.forEach((pop) => {
       closePopup(pop);
-      pop.removeEventListener("click", keyPress);
+      pop.removeEventListener("click", pressKey);
     });
   }
 };
@@ -180,4 +180,4 @@ buttonClose.addEventListener("click", function () {
 buttonCloseAdd.addEventListener("click", function () {
   closePopup(popupAdd);
 });
-formElement.addEventListener("submit", formSubmitHandler);
+formElement.addEventListener("submit", SubmitformHandler);
