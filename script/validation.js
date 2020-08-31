@@ -29,7 +29,11 @@ function findError(formElement, inputElement) {
 }
 
 function showError(formElement, inputElement, errorMessage) {
+    console.log(formElement)
+    console.log(inputElement)
+    console.log(errorMessage)
     const errorElement = findError(formElement, inputElement);
+    console.log(errorElement)
     inputElement.classList.add(validationInputs.inputErrorClass);
     errorElement.textContent = errorMessage;
     errorElement.classList.add(validationInputs.errorClass);
@@ -71,7 +75,6 @@ function openCheckValidity(formElement) {
 function setEventListeners(formElement) {
     const formInputs = Array.from(formElement.querySelectorAll(validationInputs.inputSelector));
     const formSubmitButton = formElement.querySelector(validationInputs.submitButtonSelector);
-    console.log(formSubmitButton)
     toggleButtonState(formInputs, formSubmitButton);
     formInputs.forEach(inputElement => {
         inputElement.addEventListener('input', inputEventListener);
@@ -85,7 +88,6 @@ function enableValidation(settObj) {
             evt.preventDefault(formSubmitButton);
         })
         const fieldsetList = Array.from(formElement.querySelectorAll(settObj.fieldSelector));
-        console.log(fieldsetList)
         fieldsetList.forEach(fieldset => {
             setEventListeners(fieldset);
         })
