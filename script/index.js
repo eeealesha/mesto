@@ -96,8 +96,12 @@ const addCardToContainer = (initialCard) => {
       popupFig.addEventListener("click", closePopupOverlay);
     });
 
-  cardsContainer.prepend(cardElement);
+  newFunction(cardElement);
 };
+
+function newFunction(Element) {
+  cardsContainer.prepend(Element);
+}
 
 initialCards.forEach(addCardToContainer);
 
@@ -118,6 +122,8 @@ addCardForm.addEventListener("submit", (event) => {
 
   closePopup(popupAdd);
 });
+
+
 
 function openPopup(pop) {
   pop.classList.remove("popup_closed");
@@ -155,14 +161,12 @@ function submitFormHandler(evt) {
 const closePopupOverlay = function (event) {
   if (event.target !== event.currentTarget) return;
   allPopup.forEach((pop) => {
-    console.log("HELLO")
     closePopup(pop);
   });
 };
 
 const pressKey = function (e) {
   if (e.key === "Escape") {
-    console.log("HELLO")
     allPopup.forEach((pop) => {
       closePopup(pop);
     });
