@@ -66,7 +66,7 @@ const popupFigCap = document.querySelector(".popup__figcaption");
 const formItemPlace = addCardForm.querySelector(".form__item_el_place");
 const formItemImg = addCardForm.querySelector(".form__item_el_img");
 
-const addCardToContainer = (initialCard) => {
+const createCardToContainer = (initialCard) => {
   const cardElement = card.cloneNode(true);
 
   cardElement.querySelector(".photo-grid__title").textContent =
@@ -95,15 +95,17 @@ const addCardToContainer = (initialCard) => {
       openPopup(popupFig);
       popupFig.addEventListener("click", closePopupOverlay);
     });
-
-  newFunction(cardElement);
+    return cardElement
 };
 
-function newFunction(Element) {
-  cardsContainer.prepend(Element);
-}
+function addCard(initialCards) {
+  initialCards.forEach(element =>{
+    cardsContainer.prepend(createCardToContainer(element));
+  })};
 
-initialCards.forEach(addCardToContainer);
+console.log(initialCards)
+
+addCard(initialCards)
 
 addCardForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -116,7 +118,9 @@ addCardForm.addEventListener("submit", (event) => {
   newCard.name = formItemPlace.value;
   newCard.link = formItemImg.value;
 
-  addCardToContainer(newCard);
+  console.log(newCard)
+
+  addCard(newCard);
 
   addCardForm.reset();
 
