@@ -96,10 +96,8 @@ const addCardToContainer = (initialCard) => {
       popupFig.addEventListener("click", closePopupOverlay);
     });
 
-  cardsContainer.prepend(cardElement);
+  cardsContainer.prepend(cardElement);  
 };
-
-
 
 initialCards.forEach(addCardToContainer);
 
