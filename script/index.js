@@ -99,6 +99,8 @@ const addCardToContainer = (initialCard) => {
   cardsContainer.prepend(cardElement);
 };
 
+
+
 initialCards.forEach(addCardToContainer);
 
 addCardForm.addEventListener("submit", (event) => {
@@ -121,19 +123,21 @@ addCardForm.addEventListener("submit", (event) => {
 
 function openPopup(pop) {
   pop.classList.remove("popup_closed");
+  pop.addEventListener("click", closePopupOverlay);
+  document.addEventListener("keydown", pressKey);
 }
 
 function closePopup(pop) {
   pop.classList.add("popup_closed");
+  pop.removeEventListener("click", closePopupOverlay);
+  document.removeEventListener("keydown", pressKey);
 }
 
 function openProfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
   openCheckInputValidity(formElement);
-  openPopup(popup);
-  popup.addEventListener("click", closePopupOverlay);
-  document.addEventListener("keydown", pressKey);
+  openPopup(popup); 
 }
 
 function openAddPopup() {
@@ -141,11 +145,9 @@ function openAddPopup() {
   formItemImg.value = "";
   openCheckInputValidity(addCardForm);
   openPopup(popupAdd);
-  popupAdd.addEventListener("click", closePopupOverlay);
-  document.addEventListener("keydown", pressKey);
 }
 
-function SubmitformHandler(evt) {
+function submitFormHandler(evt) {
   evt.preventDefault(); 
   profileName.textContent = formName.value;
   profileJob.textContent = formJob.value;
@@ -155,16 +157,16 @@ function SubmitformHandler(evt) {
 const closePopupOverlay = function (event) {
   if (event.target !== event.currentTarget) return;
   allPopup.forEach((pop) => {
+    console.log("HELLO")
     closePopup(pop);
-    pop.removeEventListener("click", closePopupOverlay);
   });
 };
 
 const pressKey = function (e) {
   if (e.key === "Escape") {
+    console.log("HELLO")
     allPopup.forEach((pop) => {
       closePopup(pop);
-      pop.removeEventListener("click", pressKey);
     });
   }
 };
@@ -180,4 +182,4 @@ buttonClose.addEventListener("click", function () {
 buttonCloseAdd.addEventListener("click", function () {
   closePopup(popupAdd);
 });
-formElement.addEventListener("submit", SubmitformHandler);
+formElement.addEventListener("submit", submitFormHandler);
