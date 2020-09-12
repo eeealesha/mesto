@@ -1,3 +1,9 @@
+class FormValidator {
+    constructor {
+        
+    }
+}
+
 const validationInputs = {
     formSelector: '.popup__container',
     fieldSelector: '.form',
