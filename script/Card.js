@@ -1,12 +1,13 @@
-import { initialCards } from "./initialCards.js";
+const popupImg = document.querySelector(".popup__img");
+const popupFig = document.querySelector(".popup_type_fig");
+const popupFigCap = document.querySelector(".popup__figcaption");
 
-const cardsContainer = document.querySelector(".photo-grid__list");
-
-class Card {
-  constructor(data, cardSelector) {
+export class Card {
+  constructor(data, cardSelector, openPopup) {
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
+    this._openPopup = openPopup;
   }
   _getTemplate() {
     const cardElement = document
@@ -35,10 +36,9 @@ class Card {
     this._element
       .querySelector(".photo-grid__item")
       .addEventListener("click", (event) => {
-        popupImg.src = initialCard.link;
-        popupFigCap.textContent = initialCard.name;
-        openPopup(popupFig);
-        popupFig.addEventListener("click", closePopupOverlay);
+        popupImg.src = this._link;
+        popupFigCap.textContent = this._name;
+        this._openPopup(popupFig);
       });
   }
 
@@ -53,9 +53,3 @@ class Card {
     return this._element;
   }
 }
-
-initialCards.forEach((item) => {
-  const card = new Card(item, ".cardTemplate");
-  const cardElement = card.generateCard();
-  cardsContainer.prepend(cardElement);
-});

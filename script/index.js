@@ -1,5 +1,7 @@
 import { initialCards } from "./initialCards.js";
 
+import { Card } from "./Card.js";
+
 const allPopup = document.querySelectorAll(".popup");
 
 const popup = document.querySelector(".popup_type_profile");
@@ -27,53 +29,14 @@ const buttonCloseFig = popupFig.querySelector(".button_type_close");
 
 const cardsContainer = document.querySelector(".photo-grid__list");
 
-const card = document.querySelector(".cardTemplate").content;
-
-const popupImg = document.querySelector(".popup__img");
-const popupFigCap = document.querySelector(".popup__figcaption");
-
 const formItemPlace = addCardForm.querySelector(".form__item_el_place");
 const formItemImg = addCardForm.querySelector(".form__item_el_img");
 
-const createCards = (initialCard) => {
-  const cardElement = card.cloneNode(true);
-
-  cardElement.querySelector(".photo-grid__title").textContent =
-    initialCard.name;
-  cardElement.querySelector(".photo-grid__item").src = initialCard.link;
-
-  cardElement
-    .querySelector(".button_type_delete")
-    .addEventListener("click", (event) => {
-      const card = event.target.closest(".card__element");
-      card.remove();
-    });
-
-  cardElement
-    .querySelector(".button_type_like")
-    .addEventListener("click", (event) => {
-      const button = event.target.closest(".button");
-      button.classList.toggle("button_liked");
-    });
-
-  cardElement
-    .querySelector(".photo-grid__item")
-    .addEventListener("click", (event) => {
-      popupImg.src = initialCard.link;
-      popupFigCap.textContent = initialCard.name;
-      openPopup(popupFig);
-      popupFig.addEventListener("click", closePopupOverlay);
-    });
-  return cardElement;
-};
-
-function addCardsToContainer(initialCards) {
-  initialCards.forEach((element) => {
-    cardsContainer.prepend(createCards(element));
-  });
-}
-
-addCardsToContainer(initialCards);
+initialCards.forEach((item) => {
+  const card = new Card(item, ".cardTemplate", openPopup);
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement);
+});
 
 addCardForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -153,3 +116,4 @@ buttonCloseAdd.addEventListener("click", function () {
   closePopup(popupAdd);
 });
 formElement.addEventListener("submit", submitFormHandler);
+
