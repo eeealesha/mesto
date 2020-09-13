@@ -7,6 +7,21 @@ const validationInputs = {
     inputErrorClass: 'form__item_error',
     errorClass: 'form__error-text_active'
 }
+class FormValidator {
+    constructor(validationInputs, formSelector) {
+        this._formSelector = validationInputs.formSelector;
+        this._fieldSelector = validationInputs.fieldSelector;
+        this._inputSelector = validationInputs.inputSelector;
+        this._submitButtonSelector = validationInputs.submitButtonSelector;
+        this._inactiveButtonClass = validationInputs.inactiveButtonClass;
+        this._inputErrorClass = validationInputs.inputErrorClass;
+        this._errorClass = validationInputs.errorClass;
+        this._formSelector = formSelector;
+    }
+    
+}
+
+
 
 function openCheckInputValidity(formElement) {
     const formInputs = Array.from(formElement.querySelectorAll(validationInputs.inputSelector));
