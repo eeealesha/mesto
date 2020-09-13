@@ -2,6 +2,8 @@ import { initialCards } from "./initialCards.js";
 
 import { Card } from "./Card.js";
 
+import { FormValidator } from "./FormValidator.js";
+
 const allPopup = document.querySelectorAll(".popup");
 
 const popup = document.querySelector(".popup_type_profile");
@@ -49,7 +51,9 @@ addCardForm.addEventListener("submit", (event) => {
   newCard.name = formItemPlace.value;
   newCard.link = formItemImg.value;
 
-  cardsContainer.prepend(createCards(newCard));
+  const card = new Card(newCard, ".cardTemplate", openPopup);
+  const cardElement = card.generateCard();
+  cardsContainer.prepend(cardElement);
 
   addCardForm.reset();
 
@@ -71,14 +75,14 @@ function closePopup(pop) {
 function openProfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
-  openCheckInputValidity(formElement);
+  
   openPopup(popup);
 }
 
 function openAddPopup() {
   formItemPlace.value = "";
   formItemImg.value = "";
-  openCheckInputValidity(addCardForm);
+  
   openPopup(popupAdd);
 }
 
@@ -103,6 +107,24 @@ const pressKey = function (e) {
     });
   }
 };
+
+const validationInputs = {
+  formSelector: '.popup__container',
+  fieldSelector: '.form',
+  inputSelector: '.form__item',
+  submitButtonSelector: '.button_type_submit',
+  inactiveButtonClass: 'button_inactive',
+  inputErrorClass: 'form__item_error',
+  errorClass: 'form__error-text_active'
+}
+
+const addFromValidator = new FormValidator(validationInputs, popupAdd);
+
+addFromValidator.enableValidation();
+
+const profileFromValidator = new FormValidator(validationInputs, popup);
+
+profileFromValidator.enableValidation();
 
 buttonCloseFig.addEventListener("click", function () {
   closePopup(popupFig);
