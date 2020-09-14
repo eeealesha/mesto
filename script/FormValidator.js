@@ -43,7 +43,6 @@ export class FormValidator {
   }
 
   _inputEventListener(input) {
-    console.log(input);
     this._checkInputValidity(input);
     this._toggleButtonState();
   }
