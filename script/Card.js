@@ -3,12 +3,14 @@ const popupFig = document.querySelector(".popup_type_fig");
 const popupFigCap = document.querySelector(".popup__figcaption");
 
 export class Card {
-  constructor(data, cardSelector, openPopup) {
+  constructor(data, cardSelector, openPopup) {//принимает в конструктор её данные и селектор её template-элемента;
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._openPopup = openPopup;
   }
+
+  //содержит приватные методы, которые работают с разметкой,
   _getTemplate() {
     const cardElement = document
       .querySelector(this._cardSelector)
@@ -17,34 +19,45 @@ export class Card {
 
     return cardElement;
   }
-
-  _setEventListeners() {
+  //содержит приватные методы для каждого обработчика;
+  _cardDelete(event) {
+    const card = event.target.closest(".card__element");
+    card.remove();
+  }
+  _cardLike(event) {
+    const button = event.target.closest(".button");
+    button.classList.toggle("button_liked");
+  }
+  _cardPopupOpen() {
+    popupImg.src = this._link;
+    popupImg.alt = `Изображение ${this._name}`;
+    popupFigCap.textContent = this._name;
+    this._openPopup(popupFig);
+  }
+  // устанавливают слушателей событий;
+  _setEventListeners() { 
     //удаление карточки
     this._element
       .querySelector(".button_type_delete")
       .addEventListener("click", (event) => {
-        const card = event.target.closest(".card__element");
-        card.remove();
+        this._cardDelete(event);
       });
+    
     //лайк карточки
     this._element
       .querySelector(".button_type_like")
       .addEventListener("click", (event) => {
-        const button = event.target.closest(".button");
-        button.classList.toggle("button_liked");
+        this._cardLike(event);
       });
     //открытие попапа карточки
     this._element
       .querySelector(".photo-grid__item")
       .addEventListener("click", () => {
-        popupImg.src = this._link;
-        popupImg.alt = `Изображение ${this._name}`;
-        popupFigCap.textContent = this._name;
-        this._openPopup(popupFig);
+        this._cardPopupOpen();
       });
   }
 
-  generateCard() {
+  generateCard() {//содержит один публичный метод, который возвращает полностью работоспособный и наполненный данными элемент карточки.
     this._element = this._getTemplate();
     this._setEventListeners();
     this._element.querySelector(".photo-grid__title").textContent = this._name;

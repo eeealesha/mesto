@@ -45,6 +45,8 @@ const cardsContainer = document.querySelector(".photo-grid__list");
 const formItemPlace = addCardForm.querySelector(".form__item_el_place");
 const formItemImg = addCardForm.querySelector(".form__item_el_img");
 
+//Для каждой проверяемой формы создайте экземпляр класса FormValidator
+
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
@@ -120,6 +122,8 @@ const pressKey = function (e) {
     });
   }
 };
+
+//Для каждой проверяемой формы создайте экземпляр класса FormValidator
 
 addFromValidator.enableValidation();
 
