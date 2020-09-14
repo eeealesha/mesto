@@ -1,8 +1,19 @@
+
+
 import { initialCards } from "./initialCards.js";
 
 import { Card } from "./Card.js";
 
 import { FormValidator } from "./FormValidator.js";
+
+const validationInputs = {
+  fieldSelector: ".form",
+  inputSelector: ".form__item",
+  submitButtonSelector: ".button_type_submit",
+  inactiveButtonClass: "button_inactive",
+  inputErrorClass: "form__item_error",
+  errorClass: "form__error-text_active",
+};
 
 const allPopup = document.querySelectorAll(".popup");
 
@@ -12,7 +23,7 @@ const buttonClose = popup.querySelector(".button_type_close");
 const formName = popup.querySelector(".form__item_el_name");
 const formJob = popup.querySelector(".form__item_el_job");
 
-const formElement = document.querySelector(".popup__container");
+const profileForm = document.forms["profile"];
 
 const profile = document.querySelector(".profile");
 const buttonEdit = profile.querySelector(".button_type_edit");
@@ -23,7 +34,7 @@ const profileJob = profile.querySelector(".profile__subtitle");
 const buttonAdd = document.querySelector(".button_type_add");
 
 const popupAdd = document.querySelector(".popup_type_add");
-const addCardForm = popupAdd.querySelector(".popup__container_type_add");
+const addCardForm = document.forms["card"];
 const buttonCloseAdd = popupAdd.querySelector(".button_type_close");
 
 const popupFig = document.querySelector(".popup_type_fig");
@@ -33,6 +44,9 @@ const cardsContainer = document.querySelector(".photo-grid__list");
 
 const formItemPlace = addCardForm.querySelector(".form__item_el_place");
 const formItemImg = addCardForm.querySelector(".form__item_el_img");
+
+const addFromValidator = new FormValidator(validationInputs, popupAdd);
+const profileFromValidator = new FormValidator(validationInputs, popup);
 
 initialCards.forEach((item) => {
   const card = new Card(item, ".cardTemplate", openPopup);
@@ -75,14 +89,13 @@ function closePopup(pop) {
 function openProfilePopup() {
   formName.value = profileName.textContent;
   formJob.value = profileJob.textContent;
-  
+  profileFromValidator.openCheckValidation();
   openPopup(popup);
 }
 
 function openAddPopup() {
-  formItemPlace.value = "";
-  formItemImg.value = "";
-  
+  addCardForm.reset();
+  addFromValidator.openCheckValidation();
   openPopup(popupAdd);
 }
 
@@ -108,21 +121,7 @@ const pressKey = function (e) {
   }
 };
 
-const validationInputs = {
-  formSelector: '.popup__container',
-  fieldSelector: '.form',
-  inputSelector: '.form__item',
-  submitButtonSelector: '.button_type_submit',
-  inactiveButtonClass: 'button_inactive',
-  inputErrorClass: 'form__item_error',
-  errorClass: 'form__error-text_active'
-}
-
-const addFromValidator = new FormValidator(validationInputs, popupAdd);
-
 addFromValidator.enableValidation();
-
-const profileFromValidator = new FormValidator(validationInputs, popup);
 
 profileFromValidator.enableValidation();
 
@@ -137,5 +136,4 @@ buttonClose.addEventListener("click", function () {
 buttonCloseAdd.addEventListener("click", function () {
   closePopup(popupAdd);
 });
-formElement.addEventListener("submit", submitFormHandler);
-
+profileForm.addEventListener("submit", submitFormHandler);
