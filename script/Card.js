@@ -60,11 +60,11 @@ export class Card {
   generateCard() {//содержит один публичный метод, который возвращает полностью работоспособный и наполненный данными элемент карточки.
     this._element = this._getTemplate();
     this._setEventListeners();
-    this._element.querySelector(".photo-grid__title").textContent = this._name;
-    this._element.querySelector(".photo-grid__item").src = this._link;
-    this._element.querySelector(
-      ".photo-grid__item"
-    ).alt = `Изображение ${this._name}`;
+    const cardTitle = this._element.querySelector(".photo-grid__title");
+    const cardImg = this._element.querySelector(".photo-grid__item");
+    cardTitle.textContent = this._name;
+    cardImg.src = this._link;
+    cardImg.alt = `Изображение ${this._name}`;
     return this._element;
   }
 }
