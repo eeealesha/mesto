@@ -15,8 +15,6 @@ const validationInputs = {
   errorClass: "form__error-text_active",
 };
 
-const allPopup = document.querySelectorAll(".popup");
-
 const popup = document.querySelector(".popup_type_profile");
 const buttonClose = popup.querySelector(".button_type_close");
 
@@ -83,13 +81,13 @@ addCardForm.addEventListener("submit", (event) => {
 });
 
 function openPopup(pop) {
-  pop.classList.remove("popup_closed");
+  pop.classList.add("popup_opened");
   pop.addEventListener("click", closePopupOverlay);
   document.addEventListener("keydown", pressKey);
 }
 
 function closePopup(pop) {
-  pop.classList.add("popup_closed");
+  pop.classList.remove("popup_opened");
   pop.removeEventListener("click", closePopupOverlay);
   document.removeEventListener("keydown", pressKey);
 }
@@ -116,18 +114,12 @@ function submitFormHandler(evt) {
 
 const closePopupOverlay = function (event) {
   if (event.target !== event.currentTarget) return;
-  allPopup.forEach((pop) => {
-    if (!pop.classList.contains(".popup_closed"))
-      closePopup(pop);
-  });
+      closePopup(document.querySelector(".popup_opened"));
 };
 
 const pressKey = function (e) {
   if (e.key === "Escape") {
-    allPopup.forEach((pop) => {
-      if (!pop.classList.contains(".popup_closed"))
-        closePopup(pop);
-    });
+        closePopup(document.querySelector(".popup_opened"));
   }
 };
 
