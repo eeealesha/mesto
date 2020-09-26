@@ -1,7 +1,7 @@
-import '../pages/index.css'; // добавьте импорт главного файла стилей
+import './pages/index.css'; // добавьте импорт главного файла стилей
 
 import { initialCards } from "./script/initialCards.js";
-console.log("frfr")
+
 import { Card } from "./script/Card.js";
 
 import { FormValidator } from "./script/FormValidator.js";
