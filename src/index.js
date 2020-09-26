@@ -1,8 +1,10 @@
-import { initialCards } from "./initialCards.js";
+import '../pages/index.css'; // добавьте импорт главного файла стилей
 
-import { Card } from "./Card.js";
+import { initialCards } from "./script/initialCards.js";
+console.log("frfr")
+import { Card } from "./script/Card.js";
 
-import { FormValidator } from "./FormValidator.js";
+import { FormValidator } from "./script/FormValidator.js";
 
 const validationInputs = {
   fieldSelector: ".form",
