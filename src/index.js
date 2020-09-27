@@ -6,6 +6,10 @@ import { Card } from "./script/Card.js";
 
 import { FormValidator } from "./script/FormValidator.js";
 
+import { Section } from "./script/Section.js";
+
+import { Popup } from "./script/Popup.js";
+
 const validationInputs = {
   fieldSelector: ".form",
   inputSelector: ".form__item",
@@ -48,19 +52,17 @@ const formItemImg = addCardForm.querySelector(".form__item_el_img");
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
+const cardSection = new Section({ items: initialCards, renderer: (item) =>{
+  return createCard(item, ".cardTemplate", openPopup);
+}}, cardsContainer);
+
+cardSection.renderItems(initialCards)
+
 function createCard(item, selector, openFunction) {
   const card = new Card(item, selector, openFunction);
   const cardElement = card.generateCard();
   return cardElement;
 }
-
-function addCardtoContainer(card) {
-  cardsContainer.prepend(card);
-}
-
-initialCards.forEach((item) => {
-  addCardtoContainer(createCard(item, ".cardTemplate", openPopup))
-});
 
 addCardForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -114,12 +116,12 @@ function submitFormHandler(evt) {
 
 const closePopupOverlay = function (event) {
   if (event.target !== event.currentTarget) return;
-      closePopup(document.querySelector(".popup_opened"));
+  closePopup(document.querySelector(".popup_opened"));
 };
 
 const pressKey = function (e) {
   if (e.key === "Escape") {
-        closePopup(document.querySelector(".popup_opened"));
+    closePopup(document.querySelector(".popup_opened"));
   }
 };
 

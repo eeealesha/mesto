@@ -6,7 +6,7 @@ export class Section {
         //Свойство items — это массив данных, которые нужно добавить на страницу при инициализации класса. 
         this._items = items;
         //Свойство renderer — это функция, которая отвечает за создание и отрисовку данных на странице.
-        this._rendere = renderer;
+        this._renderer = renderer;
         //Второй параметр конструктора — селектор контейнера, в который нужно добавлять созданные элементы.
         this._containerSelector = containerSelector;
     }
@@ -14,7 +14,7 @@ export class Section {
     renderItems() {
         this._items.forEach(element => {
             //Отрисовка каждого отдельного элемента должна осуществляться функцией renderer.
-            this._addItem(this._renderer(element));
+            this.addItem(this._renderer(element));
         });
     }
     //Содержит публичный метод addItem, который принимает DOM-элемент и добавляет его в контейнер.
