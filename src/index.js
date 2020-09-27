@@ -52,11 +52,19 @@ const formItemImg = addCardForm.querySelector(".form__item_el_img");
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
-const cardSection = new Section({ items: initialCards, renderer: (item) =>{
-  return createCard(item, ".cardTemplate", openPopup);
-}}, cardsContainer);
+//Создаем экземпляр класса Section для класса Card
 
-cardSection.renderItems(initialCards)
+const cardSection = new Section({
+  items: initialCards, renderer: (item) => {
+    return createCard(item, ".cardTemplate", openPopup);
+  }
+}, cardsContainer);
+
+//Отрисовываем все карточки с помощью метода renderItems класса Section
+
+cardSection.renderItems(initialCards);
+
+//Функция создания экземпляра класса Card, применения метода generateCard и возврата готовой карточки
 
 function createCard(item, selector, openFunction) {
   const card = new Card(item, selector, openFunction);
