@@ -8,9 +8,11 @@ import { FormValidator } from "./script/FormValidator.js";
 
 import { Section } from "./script/Section.js";
 
-import { Popup } from "./script/Popup.js";
+import { PopupWithImage } from "./script/PopupWithImage.js"
 
 import { UserInfo } from "./script/UserInfo.js"
+
+import { Popup } from './script/Popup.js';
 
 const validationInputs = {
   fieldSelector: ".form",
@@ -54,11 +56,18 @@ const formItemImg = addCardForm.querySelector(".form__item_el_img");
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
+//Создаем попап с картинкой
+
+const imgPop = new Popup(popupFig);
+const profilePop = new Popup(popupAdd)
+profilePop.setEventListeners();
+imgPop.setEventListeners();
+
 //Создаем экземпляр класса Section для класса Card
 
 const cardSection = new Section({
   items: initialCards, renderer: (item) => {
-    return createCard(item, ".cardTemplate", openPopup);
+    return createCard(item, ".cardTemplate", imgPop.openPopup);
   }
 }, cardsContainer);
 
@@ -78,17 +87,9 @@ function createCard(item, selector, openFunction) {
 
 const info = new UserInfo({ name: profileName, info: profileJob });
 
-//Проверяем метод getUserInfo
-
-console.log(info.getUserInfo());
-
 // Устанавливаем начальное имя и описание
 
 info.setUserInfo("Жак-Ив Кусто́", "Французский исследователь Мирового океана, фотограф, режиссёр, изобретатель, автор множества книг и фильмов");
-
-//Проверяем метод getUserInfo
-
-console.log(info.getUserInfo());
 
 addCardForm.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -107,12 +108,6 @@ addCardForm.addEventListener("submit", (event) => {
 
   closePopup(popupAdd);
 });
-
-function openPopup(pop) {
-  pop.classList.add("popup_opened");
-  pop.addEventListener("click", closePopupOverlay);
-  document.addEventListener("keydown", pressKey);
-}
 
 function closePopup(pop) {
   pop.classList.remove("popup_opened");
@@ -157,10 +152,13 @@ addFromValidator.enableValidation();
 
 profileFromValidator.enableValidation();
 
+
+
+
 buttonCloseFig.addEventListener("click", function () {
   closePopup(popupFig);
 });
-buttonAdd.addEventListener("click", openAddPopup);
+buttonAdd.addEventListener("click", ()=>{profilePop.openPopup()});
 buttonEdit.addEventListener("click", openProfilePopup);
 buttonClose.addEventListener("click", function () {
   closePopup(popup);

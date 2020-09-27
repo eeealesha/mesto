@@ -19,17 +19,18 @@ export class Popup {
     //Содержит приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc.      
     _pressKey(event) {
         if (event.key === "Escape") {
-            this.closePopup(document.querySelector(".popup_opened"));
+            this.closePopup();
         }
     };
     _closePopupOverlay(event) {
         if (event.target !== event.currentTarget) return;
-        this.closePopup(document.querySelector(".popup_opened"));
+        this.closePopup();
     };
     //Содержит публичный метод setEventListeners, который добавляет слушатель клика иконке закрытия попапа.
     setEventListeners() {
-        this._popupSelector.addEventListener("click", function () {
-            this.closePopup(this._popupSelector);
+        this._button = this._popupSelector.querySelector(".button_type_close");
+        this._button.addEventListener("click", () => {
+            this.closePopup();
         });
     }
 

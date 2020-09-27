@@ -28,12 +28,7 @@ export class Card {
     const button = event.target.closest(".button");
     button.classList.toggle("button_liked");
   }
-  _cardPopupOpen() {
-    popupImg.src = this._link;
-    popupImg.alt = `Изображение ${this._name}`;
-    popupFigCap.textContent = this._name;
-    this._openPopup(popupFig);
-  }
+
   // устанавливают слушателей событий;
   _setEventListeners() { 
     //удаление карточки
@@ -53,7 +48,7 @@ export class Card {
     this._element
       .querySelector(".photo-grid__item")
       .addEventListener("click", () => {
-        this._cardPopupOpen();
+        this._openPopup(this._name, this._link);
       });
   }
 
