@@ -10,6 +10,8 @@ import { Section } from "./script/Section.js";
 
 import { Popup } from "./script/Popup.js";
 
+import { UserInfo } from "./script/UserInfo.js"
+
 const validationInputs = {
   fieldSelector: ".form",
   inputSelector: ".form__item",
@@ -71,6 +73,22 @@ function createCard(item, selector, openFunction) {
   const cardElement = card.generateCard();
   return cardElement;
 }
+
+//Создаем экземпляр класса UserInfo
+
+const info = new UserInfo({ name: profileName, info: profileJob });
+
+//Проверяем метод getUserInfo
+
+console.log(info.getUserInfo());
+
+// Устанавливаем начальное имя и описание
+
+info.setUserInfo("Жак-Ив Кусто́", "Французский исследователь Мирового океана, фотограф, режиссёр, изобретатель, автор множества книг и фильмов");
+
+//Проверяем метод getUserInfo
+
+console.log(info.getUserInfo());
 
 addCardForm.addEventListener("submit", (event) => {
   event.preventDefault();
