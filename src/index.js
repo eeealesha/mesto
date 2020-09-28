@@ -57,9 +57,8 @@ const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
 //Создаем попап с картинкой
-
-const imgPop = new Popup(popupFig);
-const profilePop = new Popup(popupAdd)
+const profilePop = new Popup(popup);
+const imgPop = new PopupWithImage(popupFig);
 profilePop.setEventListeners();
 imgPop.setEventListeners();
 
@@ -67,7 +66,8 @@ imgPop.setEventListeners();
 
 const cardSection = new Section({
   items: initialCards, renderer: (item) => {
-    return createCard(item, ".cardTemplate", imgPop.openPopup);
+    return createCard({data:item, openPopup:() => {
+      imgPop.openPopup(item)}}, ".cardTemplate");
   }
 }, cardsContainer);
 
@@ -158,8 +158,8 @@ profileFromValidator.enableValidation();
 buttonCloseFig.addEventListener("click", function () {
   closePopup(popupFig);
 });
-buttonAdd.addEventListener("click", ()=>{profilePop.openPopup()});
-buttonEdit.addEventListener("click", openProfilePopup);
+buttonAdd.addEventListener("click", openAddPopup);
+buttonEdit.addEventListener("click", () => {profilePop.openPopup()});
 buttonClose.addEventListener("click", function () {
   closePopup(popup);
 });

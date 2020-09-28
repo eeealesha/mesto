@@ -1,13 +1,11 @@
-const popupImg = document.querySelector(".popup__img");
 const popupFig = document.querySelector(".popup_type_fig");
-const popupFigCap = document.querySelector(".popup__figcaption");
-
 export class Card {
-  constructor(data, cardSelector, openPopup) {//принимает в конструктор её данные и селектор её template-элемента;
+  constructor({data, openPopup},cardSelector) {//принимает в конструктор её данные и селектор её template-элемента;
     this._name = data.name;
     this._link = data.link;
     this._cardSelector = cardSelector;
     this._openPopup = openPopup;
+    this._openPopup = this._openPopup.bind(this);
   }
 
   //содержит приватные методы, которые работают с разметкой,
@@ -47,9 +45,7 @@ export class Card {
     //открытие попапа карточки
     this._element
       .querySelector(".photo-grid__item")
-      .addEventListener("click", () => {
-        this._openPopup(this._name, this._link);
-      });
+      .addEventListener("click", this._openPopup);
   }
 
   generateCard() {//содержит один публичный метод, который возвращает полностью работоспособный и наполненный данными элемент карточки.

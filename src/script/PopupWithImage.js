@@ -1,5 +1,7 @@
 import { Popup } from "./Popup.js";
-
+const popupImg = document.querySelector(".popup__img");
+const popupFig = document.querySelector(".popup_type_fig");
+const popupFigCap = document.querySelector(".popup__figcaption");
 //Создайте класс PopupWithImage, который наследует от Popup. 
 
 export class PopupWithImage extends Popup {
@@ -8,11 +10,12 @@ export class PopupWithImage extends Popup {
     }
     //В методе open класса PopupWithImage нужно вставлять в попап картинку и атрибут src изображения и подпись к картинке.
 
-    openPopup(name, link) {
+    openPopup(data) {
+        
+        popupImg.src = data.link;
+        popupImg.alt = `Изображение ${data.name}`;
+        popupFigCap.textContent = data.aname;
         super.openPopup();
-        popupImg.src = link;
-        popupImg.alt = `Изображение ${name}`;
-        popupFigCap.textContent = name;
         //this._openPopup(popupFig);
     }
 }

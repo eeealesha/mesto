@@ -3,9 +3,11 @@ export class Popup {
     //Принимает в конструктор единственный параметр — селектор попапа.
     constructor(popupSelector) {
         this._popupSelector = popupSelector;
+        
     }
     //Содержит публичные методы open и close, которые отвечают за открытие и закрытие попапа.
-    openPopup() {
+    openPopup () {
+        
         this._popupSelector.classList.add("popup_opened");
         this._popupSelector.addEventListener("click", this._closePopupOverlay);
         document.addEventListener("keydown", this._pressKey);
@@ -33,8 +35,6 @@ export class Popup {
             this.closePopup();
         });
     }
-
-
 }
 
 
