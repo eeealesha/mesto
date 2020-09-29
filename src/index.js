@@ -49,7 +49,6 @@ const popupFig = document.querySelector(".popup_type_fig");
 const cardsContainer = document.querySelector(".photo-grid__list");
 
 
-
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator
 
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
@@ -83,7 +82,7 @@ function addSubmit(item) {
   console.log(item)
 
   cardSection.addItem(createCard({
-    data: {name:item.place, link:item.omg}, openPopup: () => {
+    data: {name:item.place, link:item.img}, openPopup: () => {
       imgPop.openPopup({name:item.place, link:item.img})
     }
   }, ".cardTemplate"));
