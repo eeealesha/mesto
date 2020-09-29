@@ -85,7 +85,7 @@ function addSubmit(item) {
 
   cardSection.addItem(createCard({
     data: {name:item.place, link:item.omg}, openPopup: () => {
-      imgPop.openPopup({name:item.place, link:item.omg})
+      imgPop.openPopup({name:item.place, link:item.img})
     }
   }, ".cardTemplate"));
 }
