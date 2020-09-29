@@ -24,12 +24,12 @@ const validationInputs = {
 };
 
 const popup = document.querySelector(".popup_type_profile");
-const buttonClose = popup.querySelector(".button_type_close");
+
 
 const formName = popup.querySelector(".form__item_el_name");
 const formJob = popup.querySelector(".form__item_el_job");
 
-const profileForm = document.forms["profile"];
+
 
 const profile = document.querySelector(".profile");
 const buttonEdit = profile.querySelector(".button_type_edit");
@@ -41,15 +41,14 @@ const buttonAdd = document.querySelector(".button_type_add");
 
 const popupAdd = document.querySelector(".popup_type_add");
 const addCardForm = document.forms["card"];
-const buttonCloseAdd = popupAdd.querySelector(".button_type_close");
+
 
 const popupFig = document.querySelector(".popup_type_fig");
-const buttonCloseFig = popupFig.querySelector(".button_type_close");
+
 
 const cardsContainer = document.querySelector(".photo-grid__list");
 
-const formItemPlace = addCardForm.querySelector(".form__item_el_place");
-const formItemImg = addCardForm.querySelector(".form__item_el_img");
+
 
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator
 
@@ -122,25 +121,6 @@ function createCard(item, openFunction, selector) {
   return cardElement;
 }
 
-// addCardForm.addEventListener("submit", (event) => {
-//   event.preventDefault();
-
-//   const newCard = {
-//     name: " ",
-//     link: " ",
-//   };
-
-//   newCard.name = formItemPlace.value;
-//   newCard.link = formItemImg.value;
-
-//   addCardtoContainer(createCard(newCard, ".cardTemplate", openPopup))
-
-//   addCardForm.reset();
-
-//   closePopup(popupAdd);
-// });
-
-
 function openProfilePopup() {
   const UserProfile = info.getUserInfo();
   formName.value = UserProfile.name;
@@ -162,9 +142,5 @@ addFromValidator.enableValidation();
 
 profileFromValidator.enableValidation();
 
-
 buttonAdd.addEventListener("click", openAddPopup);
 buttonEdit.addEventListener("click", openProfilePopup);
-
-
-//profileForm.addEventListener("submit", submitFormHandler);
