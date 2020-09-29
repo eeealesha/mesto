@@ -23,13 +23,12 @@ export class PopupWithForm extends Popup {
         this._form = this._popupSelector.querySelector(".popup__container");
         this._form.addEventListener("submit", (event)=>{
             event.preventDefault();
-            console.log(this._getInputValues())
             this._formSubmit(this._getInputValues());
             this.closePopup();
         });
     }
     //Перезаписывает родительский метод close, так как при закрытии попапа форма должна ещё и сбрасываться.
-    //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
+   
     closePopup(){
         super.closePopup();
         this._form.reset();

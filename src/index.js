@@ -56,6 +56,7 @@ const formItemImg = addCardForm.querySelector(".form__item_el_img");
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
+//Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
 //Создаем попап с картинкой
 
 const imgPop = new PopupWithImage(popupFig);
@@ -68,8 +69,25 @@ profilePop.setEventListeners();
 
 //Функция обработки формы профиля 
 
-function profileSubmit(data){
+function profileSubmit(data) {
   info.setUserInfo(data.name, data.job);
+}
+
+//Создаем попап с функцией добавления карточки 
+
+const addPop = new PopupWithForm(popupAdd, addSubmit);
+addPop.setEventListeners();
+
+//Функция обработки формы профиля 
+
+function addSubmit(item) {
+  console.log(item)
+
+  cardSection.addItem(createCard({
+    data: {name:item.place, link:item.omg}, openPopup: () => {
+      imgPop.openPopup({name:item.place, link:item.omg})
+    }
+  }, ".cardTemplate"));
 }
 
 //Создаем экземпляр класса UserInfo
@@ -84,8 +102,11 @@ info.setUserInfo("Жак-Ив Кусто́", "Французский иссле�
 
 const cardSection = new Section({
   items: initialCards, renderer: (item) => {
-    return createCard({data:item, openPopup:() => {
-      imgPop.openPopup(item)}}, ".cardTemplate");
+    return createCard({
+      data: item, openPopup: () => {
+        imgPop.openPopup(item)
+      }
+    }, ".cardTemplate");
   }
 }, cardsContainer);
 
@@ -95,54 +116,45 @@ cardSection.renderItems(initialCards);
 
 //Функция создания экземпляра класса Card, применения метода generateCard и возврата готовой карточки
 
-function createCard(item, selector, openFunction) {
-  const card = new Card(item, selector, openFunction);
+function createCard(item, openFunction, selector) {
+  const card = new Card(item, openFunction, selector);
   const cardElement = card.generateCard();
   return cardElement;
 }
 
-addCardForm.addEventListener("submit", (event) => {
-  event.preventDefault();
+// addCardForm.addEventListener("submit", (event) => {
+//   event.preventDefault();
 
-  const newCard = {
-    name: " ",
-    link: " ",
-  };
+//   const newCard = {
+//     name: " ",
+//     link: " ",
+//   };
 
-  newCard.name = formItemPlace.value;
-  newCard.link = formItemImg.value;
+//   newCard.name = formItemPlace.value;
+//   newCard.link = formItemImg.value;
 
-  addCardtoContainer(createCard(newCard, ".cardTemplate", openPopup))
+//   addCardtoContainer(createCard(newCard, ".cardTemplate", openPopup))
 
-  addCardForm.reset();
+//   addCardForm.reset();
 
-  closePopup(popupAdd);
-});
+//   closePopup(popupAdd);
+// });
 
 
 function openProfilePopup() {
   const UserProfile = info.getUserInfo();
-  console.log(UserProfile)
   formName.value = UserProfile.name;
   formJob.value = UserProfile.info;
   profilePop.openPopup();
-  
   profileFromValidator.openCheckValidation();
-  
+
 }
 
 function openAddPopup() {
-  addCardForm.reset();
   addFromValidator.openCheckValidation();
-  openPopup(popupAdd);
+  addPop.openPopup();
 }
 
-function submitFormHandler(evt) {
-  evt.preventDefault();
-  profileName.textContent = formName.value;
-  profileJob.textContent = formJob.value;
-  closePopup(popup);
-}
 
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator
 
@@ -151,7 +163,7 @@ addFromValidator.enableValidation();
 profileFromValidator.enableValidation();
 
 
-//buttonAdd.addEventListener("click", openAddPopup);
+buttonAdd.addEventListener("click", openAddPopup);
 buttonEdit.addEventListener("click", openProfilePopup);
 
 

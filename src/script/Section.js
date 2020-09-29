@@ -19,7 +19,7 @@ export class Section {
     }
     //Содержит публичный метод addItem, который принимает DOM-элемент и добавляет его в контейнер.
     addItem(element) {
-        this._containerSelector.append(element)
+        this._containerSelector.prepend(element)
     }
 }
 //У класса Section нет своей разметки. Он получает разметку через функцию-колбэк и вставляет её в контейнер.
