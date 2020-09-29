@@ -3,11 +3,11 @@ export class Popup {
     //Принимает в конструктор единственный параметр — селектор попапа.
     constructor(popupSelector) {
         this._popupSelector = popupSelector;
-        
+        this._pressKey = this._pressKey.bind(this);
+        this._closePopupOverlay = this._closePopupOverlay.bind(this);
     }
     //Содержит публичные методы open и close, которые отвечают за открытие и закрытие попапа.
     openPopup () {
-        
         this._popupSelector.classList.add("popup_opened");
         this._popupSelector.addEventListener("click", this._closePopupOverlay);
         document.addEventListener("keydown", this._pressKey);
@@ -21,12 +21,14 @@ export class Popup {
     //Содержит приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc.      
     _pressKey(event) {
         if (event.key === "Escape") {
-            this.closePopup();
+            console.log(this)
+            this.closePopup()
         }
     };
     _closePopupOverlay(event) {
         if (event.target !== event.currentTarget) return;
-        this.closePopup();
+        console.log(this)
+        this.closePopup()
     };
     //Содержит публичный метод setEventListeners, который добавляет слушатель клика иконке закрытия попапа.
     setEventListeners() {

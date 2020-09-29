@@ -14,10 +14,14 @@ module.exports = {
             {
                 // регулярное выражение, которое ищет все js файлы
                 test: /\.js$/,
-                // при обработке этих файлов нужно использовать babel-loader
-                loader: 'babel-loader',
+
                 // исключает папку node_modules, файлы в ней обрабатывать не нужно
-                exclude: '/node_modules/'
+                exclude: '/node_modules/',
+                // при обработке этих файлов нужно использовать babel-loader
+                use: [{
+                    loader: 'babel-loader',
+                    options: { presets: ['@babel/preset-env'] }
+                }]
             },
             // добавили правило для обработки файлов
             {

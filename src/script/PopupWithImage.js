@@ -14,7 +14,7 @@ export class PopupWithImage extends Popup {
         
         popupImg.src = data.link;
         popupImg.alt = `Изображение ${data.name}`;
-        popupFigCap.textContent = data.aname;
+        popupFigCap.textContent = data.name;
         super.openPopup();
         //this._openPopup(popupFig);
     }
