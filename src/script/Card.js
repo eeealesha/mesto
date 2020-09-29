@@ -1,4 +1,3 @@
-const popupFig = document.querySelector(".popup_type_fig");
 export class Card {
   constructor({data, openPopup},cardSelector) {//принимает в конструктор её данные и селектор её template-элемента;
     this._name = data.name;

@@ -12,7 +12,7 @@ import { PopupWithImage } from "./script/PopupWithImage.js"
 
 import { UserInfo } from "./script/UserInfo.js"
 
-import { Popup } from './script/Popup.js';
+import { PopupWithForm } from './script/PopupWithForm.js';
 
 const validationInputs = {
   fieldSelector: ".form",
@@ -57,10 +57,28 @@ const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
 
 //Создаем попап с картинкой
-const profilePop = new Popup(popup);
+
 const imgPop = new PopupWithImage(popupFig);
-profilePop.setEventListeners();
 imgPop.setEventListeners();
+
+//Создаем попап с формой/профилем
+
+const profilePop = new PopupWithForm(popup, profileSubmit);
+profilePop.setEventListeners();
+
+//Функция обработки формы профиля 
+
+function profileSubmit(data){
+  info.setUserInfo(data.name, data.job);
+}
+
+//Создаем экземпляр класса UserInfo
+
+const info = new UserInfo({ name: profileName, info: profileJob });
+
+// Устанавливаем начальное имя и описание
+
+info.setUserInfo("Жак-Ив Кусто́", "Французский исследователь Мирового океана, фотограф, режиссёр, изобретатель, автор множества книг и фильмов");
 
 //Создаем экземпляр класса Section для класса Card
 
@@ -83,14 +101,6 @@ function createCard(item, selector, openFunction) {
   return cardElement;
 }
 
-//Создаем экземпляр класса UserInfo
-
-const info = new UserInfo({ name: profileName, info: profileJob });
-
-// Устанавливаем начальное имя и описание
-
-info.setUserInfo("Жак-Ив Кусто́", "Французский исследователь Мирового океана, фотограф, режиссёр, изобретатель, автор множества книг и фильмов");
-
 addCardForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
@@ -109,17 +119,16 @@ addCardForm.addEventListener("submit", (event) => {
   closePopup(popupAdd);
 });
 
-function closePopup(pop) {
-  pop.classList.remove("popup_opened");
-  pop.removeEventListener("click", closePopupOverlay);
-  document.removeEventListener("keydown", pressKey);
-}
 
 function openProfilePopup() {
-  formName.value = profileName.textContent;
-  formJob.value = profileJob.textContent;
+  const UserProfile = info.getUserInfo();
+  console.log(UserProfile)
+  formName.value = UserProfile.name;
+  formJob.value = UserProfile.info;
+  profilePop.openPopup();
+  
   profileFromValidator.openCheckValidation();
-  openPopup(popup);
+  
 }
 
 function openAddPopup() {
@@ -135,17 +144,6 @@ function submitFormHandler(evt) {
   closePopup(popup);
 }
 
-const closePopupOverlay = function (event) {
-  if (event.target !== event.currentTarget) return;
-  closePopup(document.querySelector(".popup_opened"));
-};
-
-const pressKey = function (e) {
-  if (e.key === "Escape") {
-    closePopup(document.querySelector(".popup_opened"));
-  }
-};
-
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator
 
 addFromValidator.enableValidation();
@@ -153,17 +151,8 @@ addFromValidator.enableValidation();
 profileFromValidator.enableValidation();
 
 
+//buttonAdd.addEventListener("click", openAddPopup);
+buttonEdit.addEventListener("click", openProfilePopup);
 
 
-buttonCloseFig.addEventListener("click", function () {
-  closePopup(popupFig);
-});
-buttonAdd.addEventListener("click", openAddPopup);
-buttonEdit.addEventListener("click", () => {profilePop.openPopup()});
-buttonClose.addEventListener("click", function () {
-  closePopup(popup);
-});
-buttonCloseAdd.addEventListener("click", function () {
-  closePopup(popupAdd);
-});
-profileForm.addEventListener("submit", submitFormHandler);
+//profileForm.addEventListener("submit", submitFormHandler);

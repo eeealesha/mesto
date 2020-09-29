@@ -1,6 +1,5 @@
 import { Popup } from "./Popup.js";
 const popupImg = document.querySelector(".popup__img");
-const popupFig = document.querySelector(".popup_type_fig");
 const popupFigCap = document.querySelector(".popup__figcaption");
 //Создайте класс PopupWithImage, который наследует от Popup. 
 
@@ -16,6 +15,6 @@ export class PopupWithImage extends Popup {
         popupImg.alt = `Изображение ${data.name}`;
         popupFigCap.textContent = data.name;
         super.openPopup();
-        //this._openPopup(popupFig);
+        
     }
 }
