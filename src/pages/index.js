@@ -14,14 +14,7 @@ import { UserInfo } from "../script/UserInfo.js"
 
 import { PopupWithForm } from '../script/PopupWithForm.js';
 
-const validationInputs = {
-  fieldSelector: ".form",
-  inputSelector: ".form__item",
-  submitButtonSelector: ".button_type_submit",
-  inactiveButtonClass: "button_inactive",
-  inputErrorClass: "form__item_error",
-  errorClass: "form__error-text_active",
-};
+import { validationInputs } from '../utils/constants.js';
 
 const popup = document.querySelector(".popup_type_profile");
 
