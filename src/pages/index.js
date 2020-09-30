@@ -1,6 +1,6 @@
 import './index.css'; // добавьте импорт главного файла стилей
 
-import { initialCards } from "../script/initialCards.js";
+import { initialCards } from "../utils/constants.js";
 
 import { Card } from "../script/Card.js";
 
