@@ -1,18 +1,18 @@
-import './pages/index.css'; // добавьте импорт главного файла стилей
+import './index.css'; // добавьте импорт главного файла стилей
 
-import { initialCards } from "./script/initialCards.js";
+import { initialCards } from "../script/initialCards.js";
 
-import { Card } from "./script/Card.js";
+import { Card } from "../script/Card.js";
 
-import { FormValidator } from "./script/FormValidator.js";
+import { FormValidator } from "../script/FormValidator.js";
 
-import { Section } from "./script/Section.js";
+import { Section } from "../script/Section.js";
 
-import { PopupWithImage } from "./script/PopupWithImage.js"
+import { PopupWithImage } from "../script/PopupWithImage.js"
 
-import { UserInfo } from "./script/UserInfo.js"
+import { UserInfo } from "../script/UserInfo.js"
 
-import { PopupWithForm } from './script/PopupWithForm.js';
+import { PopupWithForm } from '../script/PopupWithForm.js';
 
 const validationInputs = {
   fieldSelector: ".form",
