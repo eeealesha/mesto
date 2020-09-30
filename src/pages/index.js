@@ -114,9 +114,9 @@ function createCard(item, openFunction, selector) {
 }
 
 function openProfilePopup() {
-  const UserProfile = info.getUserInfo();
-  formName.value = UserProfile.name;
-  formJob.value = UserProfile.info;
+  const userProfile = info.getUserInfo();
+  formName.value = userProfile.name;
+  formJob.value = userProfile.info;
   profilePop.openPopup();
   profileFromValidator.openCheckValidation();
 
