@@ -15,7 +15,7 @@ export class UserInfo {
     //Содержит публичный метод getUserInfo, который возвращает объект с данными пользователя. 
     //Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
     getUserInfo() {
-        return {
+        return {   
             name: this._name.textContent,
             info: this._info.textContent
         }

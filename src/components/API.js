@@ -17,4 +17,21 @@ export class API {
             return Promise.reject(`Error: ${res.status}`);
         });
     }
+
+    setUserProfile(name, about) {
+        return fetch(`${this._token.generalURL}/users/me`, {
+          method: 'PATCH',
+          headers: this._token.headers,
+          body: JSON.stringify({
+            name: name,
+            about: about
+          })
+        })
+        .then((res) => {
+          if (res.ok) {
+            return res.json();
+          }
+          return Promise.reject(`Ошибка: ${res.status}`);
+        });
+      }
 }
