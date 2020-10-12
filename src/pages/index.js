@@ -2,17 +2,17 @@ import './index.css'; // добавьте импорт главного файл
 
 import { initialCards } from "../utils/constants.js";
 
-import { Card } from "../script/Card.js";
+import { Card } from "../components/Card.js";
 
-import { FormValidator } from "../script/FormValidator.js";
+import { FormValidator } from "../components/FormValidator.js";
 
-import { Section } from "../script/Section.js";
+import { Section } from "../components/Section.js";
 
-import { PopupWithImage } from "../script/PopupWithImage.js"
+import { PopupWithImage } from "../components/PopupWithImage.js"
 
-import { UserInfo } from "../script/UserInfo.js"
+import { UserInfo } from "../components/UserInfo.js"
 
-import { PopupWithForm } from '../script/PopupWithForm.js';
+import { PopupWithForm } from '../components/PopupWithForm.js';
 
 import { validationInputs } from '../utils/constants.js';
 
