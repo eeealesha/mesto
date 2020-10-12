@@ -33,3 +33,11 @@ export const validationInputs = {
       link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
     },
   ];
+
+  export const token = { 
+    generalURL: "https://mesto.nomoreparties.co/v1/cohort-16",
+    headers: {
+      authorization: "2cbbf139-db5f-40de-8d4c-6c77fbe4b91c",
+      "Content-Type":"application/json"
+    }
+  }

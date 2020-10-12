@@ -14,7 +14,19 @@ import { UserInfo } from "../components/UserInfo.js"
 
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
-import { validationInputs } from '../utils/constants.js';
+//Импортирую класс АПИ
+
+import { API } from "../components/API.js"
+
+//Импортрую токен 
+
+import { validationInputs, token } from '../utils/constants.js';
+
+//Создаю экземпляр класса АПИ
+
+console.log(token)
+
+const Api = new API(token);
 
 const popup = document.querySelector(".popup_type_profile");
 
@@ -22,13 +34,10 @@ const popup = document.querySelector(".popup_type_profile");
 const formName = popup.querySelector(".form__item_el_name");
 const formJob = popup.querySelector(".form__item_el_job");
 
-
-
 const profile = document.querySelector(".profile");
+//let profileName = profile.querySelector(".profile__title");
+//let profileJob = profile.querySelector(".profile__subtitle");
 const buttonEdit = profile.querySelector(".button_type_edit");
-
-const profileName = profile.querySelector(".profile__title");
-const profileJob = profile.querySelector(".profile__subtitle");
 
 const buttonAdd = document.querySelector(".button_type_add");
 
@@ -61,7 +70,7 @@ profilePop.setEventListeners();
 //Функция обработки формы профиля 
 
 function profileSubmit(data) {
-  info.setUserInfo(data.name, data.job);
+  Info.setUserInfo(data.name, data.job);
 }
 
 //Создаем попап с функцией добавления карточки 
@@ -81,13 +90,9 @@ function addSubmit(item) {
   }, ".cardTemplate"));
 }
 
-//Создаем экземпляр класса UserInfo
 
-const info = new UserInfo({ name: profileName, info: profileJob });
 
-// Устанавливаем начальное имя и описание
 
-info.setUserInfo("Жак-Ив Кусто́", "Французский исследователь Мирового океана, фотограф, режиссёр, изобретатель, автор множества книг и фильмов");
 
 //Создаем экземпляр класса Section для класса Card
 
@@ -114,7 +119,7 @@ function createCard(item, openFunction, selector) {
 }
 
 function openProfilePopup() {
-  const userProfile = info.getUserInfo();
+  const userProfile = Info.getUserInfo();
   formName.value = userProfile.name;
   formJob.value = userProfile.info;
   profilePop.openPopup();
@@ -126,6 +131,22 @@ function openAddPopup() {
   addFromValidator.openCheckValidation();
   addPop.openPopup();
 }
+
+// Загружаю информацию профиля на сайт
+
+Promise.all([Api.getUserProfile()])
+  .then((data) => {
+    const [info] = data;
+    console.log(info);
+    //Создаем экземпляр класса UserInfo
+    const Info = new UserInfo({ name: "", info: "" });
+    // Устанавливаем начальное имя и описание с сервера
+    Info.setUserInfo(info.name, info.about);
+    // Устанавливаем начальный аватар с сервера 
+    Info.setUserImg(info.avatar);
+  })
+
+
 
 
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator

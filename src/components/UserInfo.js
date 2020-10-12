@@ -1,3 +1,8 @@
+
+const profile = document.querySelector(".profile");
+const profileName = profile.querySelector(".profile__title");
+const profileJob = profile.querySelector(".profile__subtitle");
+const profilePic = profile.querySelector(".profile__picture")
 //Создайте класс UserInfo
 //Класс UserInfo отвечает за управление отображением информации о пользователе на странице. Этот класс:
 export class UserInfo {
@@ -17,7 +22,11 @@ export class UserInfo {
     }
     //Содержит публичный метод setUserInfo, который принимает новые данные пользователя и добавляет их на страницу.
     setUserInfo(newName, newInfo) {
-        this._name.textContent = newName;
-        this._info.textContent = newInfo;
+        profileName.textContent = newName;
+        profileJob.textContent = newInfo;
+    }
+
+    setUserImg(newImg) {
+        profilePic.src = newImg;
     }
 }
