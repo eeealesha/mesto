@@ -3,7 +3,6 @@ export class Card {
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
-    console.log(data.likes)
     this._ID = data._id;
     this._userID = userID;
     this._ownerID = data.owner._id;
@@ -35,12 +34,12 @@ export class Card {
     this._likesAmount =this._element.querySelector(".photo-grid__like-counter")
     if (!this._button.classList.contains("button_liked")) {
         this._cardPutLike(this._ID)
-        this._likesAmount.textContent = this._likes.length + 1;
+        this._likesAmount.textContent = this._likes.length += 1;
         this._button.classList.add("button_liked");
     }
     else {
       this._cardDeleteLike(this._ID)
-      this._likesAmount.textContent = this._likes.length;
+      this._likesAmount.textContent = this._likes.length -= 1;
       this._button.classList.remove("button_liked");
     }
 
@@ -49,7 +48,6 @@ export class Card {
   //Проверка постановки лайка на карточку пользователем 
 
   _isCardLiked() {
-    console.log(this._likes)
     return this._likes.some((like) => {
       return like._id === this.userID;
     });
