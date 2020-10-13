@@ -5,6 +5,9 @@ export class PopupWithForm extends Popup {
     constructor(popupSelector, formSubmit){
         super(popupSelector);
         this._formSubmit = formSubmit;
+        //находим кнопку сохранения попапа
+        this._formContainer = this._popupSelector.querySelector(".popup__container")
+        this._submitButton = this._formContainer.querySelector(".button_type_submit")
     }
     //Содержит приватный метод _getInputValues, который собирает данные всех полей формы.
     _getInputValues(){
@@ -23,7 +26,8 @@ export class PopupWithForm extends Popup {
         this._form = this._popupSelector.querySelector(".popup__container");
         this._form.addEventListener("submit", (event)=>{
             event.preventDefault();
-            
+            //эффект сохранения
+            this._submitButton.textContent = "Сохраняю..."
             this._formSubmit(this._getInputValues());
             this.closePopup();
         });

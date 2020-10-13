@@ -47,6 +47,7 @@ const addCardForm = document.forms["card"];
 
 const popupFig = document.querySelector(".popup_type_fig");
 
+const buttonAvatar = document.querySelector(".botton_type_avatar");
 
 const cardsContainer = document.querySelector(".photo-grid__list");
 
@@ -58,7 +59,7 @@ const avatarPop = document.querySelector(".popup_type_avatar")
 
 const addFromValidator = new FormValidator(validationInputs, popupAdd);
 const profileFromValidator = new FormValidator(validationInputs, popup);
-
+const avatarFormValidator = new FormValidator(validationInputs, avatarPop);
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
 //Создаем попап с картинкой
 
@@ -154,7 +155,36 @@ Promise.all([Api.getUserProfile()])
         Info.setUserInfo(data.name, data.about);
       })
       .then(() => {
-        profile.querySelector(".button_type_submit").textContent = "Сохраняю...";
+        //возвращаю нормальное состояние кнопке сохранить
+        popup.querySelector(".button_type_submit").textContent = "Сохранить";
+        profilePop.closePopup();
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    }
+    //Создаем экземпляр попапа для редактирования попапа
+    const avatarPopUP = new PopupWithForm(avatarPop, avatarSubmit);
+    //Устанавливаем слушатели
+    avatarPopUP.setEventListeners();
+    //Добавляем слушателя кнопке редактирования аватара
+    buttonAvatar.addEventListener("click", openAvatarPopup);
+    //Функция открытия попапа с аватаром
+    function openAvatarPopup(){
+      avatarPopUP.openPopup();
+      avatarFormValidator.openCheckValidation();
+    }
+    //Функция обработки формы аватара
+    function avatarSubmit(avatar) {
+      //Отравка данных на сервер
+      Api.setUserAvatar(avatar)
+      .then((avatar) => {
+        //сохранение данных
+        Info.setUserImg(avatar);
+      })
+      .then(() => {
+        //возвращаю нормальное состояние кнопке сохранить
+        popup.querySelector(".button_type_submit").textContent = "Сохранить";
         profilePop.closePopup();
       })
       .catch((err) => {
@@ -171,6 +201,8 @@ Promise.all([Api.getUserProfile()])
 addFromValidator.enableValidation();
 
 profileFromValidator.enableValidation();
+
+avatarFormValidator.enableValidation();
 
 buttonAdd.addEventListener("click", openAddPopup);
 
