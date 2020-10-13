@@ -87,23 +87,6 @@ function addSubmit(item) {
   }, ".cardTemplate"));
 }
 
-
-//Создаем экземпляр класса Section для класса Card
-
-const cardSection = new Section({
-  items: initialCards, renderer: (item) => {
-    return createCard({
-      data: item, openPopup: () => {
-        imgPop.openPopup(item)
-      }
-    }, ".cardTemplate");
-  }
-}, cardsContainer);
-
-//Отрисовываем все карточки с помощью метода renderItems класса Section
-
-cardSection.renderItems(initialCards);
-
 //Функция создания экземпляра класса Card, применения метода generateCard и возврата готовой карточки
 
 function createCard(item, openFunction, selector) {
@@ -121,12 +104,11 @@ function openAddPopup() {
 
 // Загружаю информацию профиля на сайт
 
-Promise.all([Api.getUserProfile()])
+Promise.all([Api.getUserProfile(), Api.loadCards()])
   .then((data) => {
-    const [info] = data;
-    console.log(info);
+    const [info, cards] = data;
     //Создаем экземпляр класса UserInfo
-    const Info = new UserInfo({ name: info.name, info: info.about});
+    const Info = new UserInfo({ name: info.name, info: info.about });
     // Устанавливаем начальное имя и описание с сервера
     Info.setUserInfo(info.name, info.about);
     // Устанавливаем начальный аватар с сервера 
@@ -150,18 +132,18 @@ Promise.all([Api.getUserProfile()])
     function profileSubmit(data) {
       //Отравка данных на сервер
       Api.setUserProfile(data.name, data.job)
-      .then((data) => {
-        //сохранение данных
-        Info.setUserInfo(data.name, data.about);
-      })
-      .then(() => {
-        //возвращаю нормальное состояние кнопке сохранить
-        popup.querySelector(".button_type_submit").textContent = "Сохранить";
-        profilePop.closePopup();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((data) => {
+          //сохранение данных
+          Info.setUserInfo(data.name, data.about);
+        })
+        .then(() => {
+          //возвращаю нормальное состояние кнопке сохранить
+          popup.querySelector(".button_type_submit").textContent = "Сохранить";
+          profilePop.closePopup();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
     //Создаем экземпляр попапа для редактирования попапа
     const avatarPopUP = new PopupWithForm(avatarPop, avatarSubmit);
@@ -170,7 +152,7 @@ Promise.all([Api.getUserProfile()])
     //Добавляем слушателя кнопке редактирования аватара
     buttonAvatar.addEventListener("click", openAvatarPopup);
     //Функция открытия попапа с аватаром
-    function openAvatarPopup(){
+    function openAvatarPopup() {
       avatarPopUP.openPopup();
       avatarFormValidator.openCheckValidation();
     }
@@ -178,19 +160,34 @@ Promise.all([Api.getUserProfile()])
     function avatarSubmit(avatar) {
       //Отравка данных на сервер
       Api.setUserAvatar(avatar)
-      .then((avatar) => {
-        //сохранение данных
-        Info.setUserImg(avatar);
-      })
-      .then(() => {
-        //возвращаю нормальное состояние кнопке сохранить
-        popup.querySelector(".button_type_submit").textContent = "Сохранить";
-        profilePop.closePopup();
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+        .then((avatar) => {
+          //сохранение данных
+          Info.setUserImg(avatar);
+        })
+        .then(() => {
+          //возвращаю нормальное состояние кнопке сохранить
+          popup.querySelector(".button_type_submit").textContent = "Сохранить";
+          profilePop.closePopup();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     }
+    //Создаем экземпляр класса Section для класса Card
+
+    const cardSection = new Section({
+      items: cards, renderer: (item) => {
+        return createCard({
+          data: item, userID: userID, openPopup: () => {
+            imgPop.openPopup(item)
+          }, cardPutLike: () => { Api.cardPutLike(item._id) },
+          cardDeleteLike: () => { Api.cardDeleteLike(item._id) } 
+        }, ".cardTemplate");
+      }
+    }, cardsContainer);
+
+    //Отрисовываем все карточки с помощью метода renderItems класса Section
+    cardSection.renderItems(cards);
   })
 
 

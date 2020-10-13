@@ -36,7 +36,6 @@ export class API {
     }
     //Чтобы сменить аватар, отправьте такой PATCH-запрос:
     setUserAvatar(avatar) {
-        console.log(avatar)
         return fetch(`${this._token.generalURL}/users/me/avatar`, {
             method: 'PATCH',
             headers: this._token.headers,
@@ -44,6 +43,45 @@ export class API {
                 avatar: avatar.link
             })
         })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            });
+    }
+    //Загружаем данные с сервера
+    loadCards() {
+        return fetch(`${this._token.generalURL}/cards`, {
+            method: 'GET',
+            headers: this._token.headers
+            })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            });
+    }
+    //Ставим лайк на сервер
+    cardPutLike(ID) {
+        return fetch(`${this._token.generalURL}/cards/likes/${ID}`, {
+            method: 'PUT',
+            headers: this._token.headers
+            })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            });
+    }
+    //Убираем лайк на сервер
+    cardDeleteLike(ID) {
+        return fetch(`${this._token.generalURL}/cards/likes/${ID}`, {
+            method: 'DELETE',
+            headers: this._token.headers
+            })
             .then((res) => {
                 if (res.ok) {
                     return res.json();

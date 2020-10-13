@@ -59,6 +59,6 @@ module.exports = {
             template: './src/index.html', // путь к файлу index.html
             favicon: './src/images/profile-picture.png'
         }),
-        new MiniCssExtractPlugin() // подключение плагина для объединения файлов
-    ] // добавьте массив
+        new MiniCssExtractPlugin(), // подключение плагина для объединения файлов
+    ] 
 };

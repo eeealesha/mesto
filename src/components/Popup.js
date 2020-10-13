@@ -21,13 +21,11 @@ export class Popup {
     //Содержит приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc.      
     _pressKey(event) {
         if (event.key === "Escape") {
-            console.log(this)
             this.closePopup()
         }
     };
     _closePopupOverlay(event) {
         if (event.target !== event.currentTarget) return;
-        console.log(this)
         this.closePopup()
     };
     //Содержит публичный метод setEventListeners, который добавляет слушатель клика иконке закрытия попапа.
