@@ -91,9 +91,6 @@ export class API {
     }
     //Добавляем карточку 
     setCard(name, link) {
-        console.log(this)
-        console.log(name)
-        console.log(link)
         return fetch(`${this._token.generalURL}/cards`, {
             method: 'POST',
             headers: this._token.headers,

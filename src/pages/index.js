@@ -14,6 +14,9 @@ import { UserInfo } from "../components/UserInfo.js"
 
 import { PopupWithForm } from '../components/PopupWithForm.js';
 
+import { PopupWithSubmit } from '../components/PopupWithSubmit.js';
+
+
 //Импортирую класс АПИ
 
 import { API } from "../components/API.js"
@@ -23,8 +26,6 @@ import { API } from "../components/API.js"
 import { validationInputs, token } from '../utils/constants.js';
 
 //Создаю экземпляр класса АПИ
-
-console.log(token)
 
 const Api = new API(token);
 
@@ -51,6 +52,14 @@ const buttonAvatar = document.querySelector(".botton_type_avatar");
 
 const cardsContainer = document.querySelector(".photo-grid__list");
 
+//Находим попап удаления карточки
+
+const popupConfirm = document.querySelector(".popup_type_confirm")
+
+//Находим кнопку удаления карточки 
+
+const buttonConfirm = document.querySelector(".button_type_delete")
+
 //Находим попап для замены аватарки
 
 const avatarPop = document.querySelector(".popup_type_avatar")
@@ -62,16 +71,10 @@ const profileFromValidator = new FormValidator(validationInputs, popup);
 const avatarFormValidator = new FormValidator(validationInputs, avatarPop);
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
 //Создаем попап с картинкой
-
+const submitPopup = new PopupWithSubmit(popupConfirm);
+submitPopup.setEventListeners();
 const imgPop = new PopupWithImage(popupFig);
 imgPop.setEventListeners();
-
-
-
-
-
-
-
 
 
 //Функция создания экземпляра класса Card, применения метода generateCard и возврата готовой карточки
@@ -81,9 +84,6 @@ function createCard(item, openFunction, selector) {
   const cardElement = card.generateCard();
   return cardElement;
 }
-
-
-
 
 
 // Загружаю информацию профиля на сайт
@@ -159,13 +159,23 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
     }
     //Создаем экземпляр класса Section для класса Card
 
+    function cardDeleteHand(item){
+      Api.cardDelete(item._id)
+      .then((item) => {
+        console.log(item)
+        item._cardDelete()
+      })
+    }
+
     const cardSection = new Section({
       items: cards, renderer: (item) => {
         return createCard({
           data: item, userID: userID, openPopup: () => {
             imgPop.openPopup(item)
           }, cardPutLike: () => { Api.cardPutLike(item._id) },
-          cardDeleteLike: () => { Api.cardDeleteLike(item._id) }
+          cardDeleteLike: () => { Api.cardDeleteLike(item._id) },
+          handleTrashButtonClick: () => { submitPopup.open() },
+          setHandleSubmit: () => { submitPopup.setHandleSubmit() }
         }, ".cardTemplate");
       }
     }, cardsContainer);
@@ -194,7 +204,9 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
             data: item, userID: userID, openPopup: () => {
               imgPop.openPopup(item)
             }, cardPutLike: () => { Api.cardPutLike(item._id) },
-            cardDeleteLike: () => { Api.cardDeleteLike(item._id) }
+            cardDeleteLike: () => { Api.cardDeleteLike(item._id)},
+            handleTrashButtonClick: () => { submitPopup.open() },
+            setHandleSubmit: () => { submitPopup.setHandleSubmit() }
           }, ".cardTemplate"));
         })
         .then(() => {
@@ -206,11 +218,8 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
           console.log(err);
         });
     }
-
+    
   })
-
-
-
 
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator
 

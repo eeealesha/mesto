@@ -1,5 +1,5 @@
 export class Card {
-  constructor({ data, userID, openPopup, cardPutLike, cardDeleteLike }, cardSelector) {//принимает в конструктор её данные и селектор её template-элемента;
+  constructor({ data, userID, openPopup, cardPutLike, cardDeleteLike, handleTrashButtonClick, setHandleSubmit, removeCard }, cardSelector) {//принимает в конструктор её данные и селектор её template-элемента;
     this._name = data.name;
     this._link = data.link;
     this._likes = data.likes;
@@ -13,6 +13,12 @@ export class Card {
     this._cardDeleteLike = cardDeleteLike;
     this._cardLike = this._cardLike.bind(this);
     
+    this._handleTrashButtonClick = handleTrashButtonClick;
+    this._handleTrashButtonClick = this._handleTrashButtonClick.bind(this);
+
+    this._setHandleSubmit = setHandleSubmit; 
+
+    this._removeCard = removeCard;
   }
 
   //содержит приватные методы, которые работают с разметкой,
@@ -25,9 +31,9 @@ export class Card {
     return cardElement;
   }
   //содержит приватные методы для каждого обработчика;
-  _cardDelete(event) {
-    const card = event.target.closest(".card__element");
-    card.remove();
+  _cardDelete() {
+    this._element.remove();
+    this._element = null;
   }
   //Постановка лайка на карточку
   _cardLike() {
@@ -46,23 +52,16 @@ export class Card {
 
   }
 
-  //Проверка постановки лайка на карточку пользователем 
-
-  _isCardLiked() {
-    return this._likes.some((like) => {
-      return like._id === this.userID;
-    });
-  }
 
   // устанавливают слушателей событий;
   _setEventListeners() {
-    //удаление карточки
+    //открытие попапа подтверждения карточки
     this._element
       .querySelector(".button_type_delete")
       .addEventListener("click", (event) => {
-        this._cardDelete(event);
+        this._handleTrashButtonClick();
+        this._setHandleSubmit(this._deleteCard());
       });
-
     //лайк карточки
     this._element
       .querySelector(".button_type_like")
@@ -88,10 +87,23 @@ export class Card {
     if (this._ownerID !== this._userID) {
       cardDelete.setAttribute("hidden", "");
     }
-    
+     //Проверка постановки лайка на карточку пользователем 
     if (this._likes.some(like => like._id === this._userID)) {
       cardLikeButton.classList.add("button_liked");
     };
     return this._element;
   }
+
+  _deleteCard(){
+    this._removeCard(this._ID)
+    .then(() => {
+      this._card.remove();
+      this._card = null;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  }
+
+
 }

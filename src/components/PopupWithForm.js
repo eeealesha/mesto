@@ -25,6 +25,7 @@ export class PopupWithForm extends Popup {
         super.setEventListeners();
         this._form = this._popupSelector.querySelector(".popup__container");
         this._form.addEventListener("submit", (event)=>{
+            console.log(event)
             event.preventDefault();
             //эффект сохранения
             this._submitButton.textContent = "Сохраняю..."
