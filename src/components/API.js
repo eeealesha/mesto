@@ -55,7 +55,7 @@ export class API {
         return fetch(`${this._token.generalURL}/cards`, {
             method: 'GET',
             headers: this._token.headers
-            })
+        })
             .then((res) => {
                 if (res.ok) {
                     return res.json();
@@ -68,7 +68,7 @@ export class API {
         return fetch(`${this._token.generalURL}/cards/likes/${ID}`, {
             method: 'PUT',
             headers: this._token.headers
-            })
+        })
             .then((res) => {
                 if (res.ok) {
                     return res.json();
@@ -81,7 +81,40 @@ export class API {
         return fetch(`${this._token.generalURL}/cards/likes/${ID}`, {
             method: 'DELETE',
             headers: this._token.headers
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            });
+    }
+    //Добавляем карточку 
+    setCard(name, link) {
+        console.log(this)
+        console.log(name)
+        console.log(link)
+        return fetch(`${this._token.generalURL}/cards`, {
+            method: 'POST',
+            headers: this._token.headers,
+            body: JSON.stringify({
+                name: name,
+                link: link
             })
+        })
+            .then((res) => {
+                if (res.ok) {
+                    return res.json();
+                }
+                return Promise.reject(`Ошибка: ${res.status}`);
+            });
+    }
+    //Удаляем карточку
+    cardDelete(ID) {
+        return fetch(`${this._token.generalURL}/cards/${ID}`, {
+            method: 'DELETE',
+            headers: this._token.headers
+        })
             .then((res) => {
                 if (res.ok) {
                     return res.json();

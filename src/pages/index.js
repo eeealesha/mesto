@@ -70,22 +70,9 @@ imgPop.setEventListeners();
 
 
 
-//Создаем попап с функцией добавления карточки 
 
-const addPop = new PopupWithForm(popupAdd, addSubmit);
-addPop.setEventListeners();
 
-//Функция обработки формы профиля 
 
-function addSubmit(item) {
-  console.log(item)
-
-  cardSection.addItem(createCard({
-    data: { name: item.place, link: item.img }, openPopup: () => {
-      imgPop.openPopup({ name: item.place, link: item.img })
-    }
-  }, ".cardTemplate"));
-}
 
 //Функция создания экземпляра класса Card, применения метода generateCard и возврата готовой карточки
 
@@ -97,10 +84,7 @@ function createCard(item, openFunction, selector) {
 
 
 
-function openAddPopup() {
-  addFromValidator.openCheckValidation();
-  addPop.openPopup();
-}
+
 
 // Загружаю информацию профиля на сайт
 
@@ -181,13 +165,48 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
           data: item, userID: userID, openPopup: () => {
             imgPop.openPopup(item)
           }, cardPutLike: () => { Api.cardPutLike(item._id) },
-          cardDeleteLike: () => { Api.cardDeleteLike(item._id) } 
+          cardDeleteLike: () => { Api.cardDeleteLike(item._id) }
         }, ".cardTemplate");
       }
     }, cardsContainer);
 
     //Отрисовываем все карточки с помощью метода renderItems класса Section
     cardSection.renderItems(cards);
+
+    //Создаем попап с функцией добавления карточки 
+    const addPop = new PopupWithForm(popupAdd, addSubmit);
+
+    buttonAdd.addEventListener("click", openAddPopup);
+
+    addPop.setEventListeners();
+
+    function openAddPopup() {
+      addFromValidator.openCheckValidation();
+      addPop.openPopup();
+    }
+
+    //Функция обработки формы профиля 
+
+    function addSubmit(item) {
+      Api.setCard(item.place, item.img)
+        .then((item) => {
+          cardSection.addItem(createCard({
+            data: item, userID: userID, openPopup: () => {
+              imgPop.openPopup(item)
+            }, cardPutLike: () => { Api.cardPutLike(item._id) },
+            cardDeleteLike: () => { Api.cardDeleteLike(item._id) }
+          }, ".cardTemplate"));
+        })
+        .then(() => {
+          //возвращаю нормальное состояние кнопке сохранить
+          addPop.querySelector(".button_type_submit").textContent = "Сохранить";
+          addPop.closePopup();
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+
   })
 
 
@@ -201,5 +220,5 @@ profileFromValidator.enableValidation();
 
 avatarFormValidator.enableValidation();
 
-buttonAdd.addEventListener("click", openAddPopup);
+
 

@@ -12,6 +12,7 @@ export class Card {
     this._cardPutLike = cardPutLike;
     this._cardDeleteLike = cardDeleteLike;
     this._cardLike = this._cardLike.bind(this);
+    
   }
 
   //содержит приватные методы, которые работают с разметкой,
