@@ -12,7 +12,7 @@ class Card {
     this._handleDeleteClick = handleDeleteClick;
     this._templateSelector = templateSelector;
     this._like = this._like.bind(this);
-    this._remove = this._remove.bind(this);
+    this._remove = this.removeCard.bind(this);
     this._handleCardClick = this._handleCardClick.bind(this);
     this._handleDeleteClick = this._handleDeleteClick.bind(this);
   }
@@ -30,7 +30,7 @@ class Card {
 
 
   setLikes(data){
-    this._likeCount.textContent = data._likes.length;
+    this._likeCount.textContent = data.likes.length;
   }
   
   
@@ -51,7 +51,7 @@ class Card {
     }
   }
 
-  _remove() {
+  removeCard() {
     this._removeEventListeners()
     this._element.remove()
     this._element = null;

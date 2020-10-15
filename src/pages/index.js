@@ -9,51 +9,50 @@ import { UserInfo } from '../components/UserInfo.js'
 import { Section } from '../components/Section.js'
 import { validationInputs } from '../utils/constants.js';
 
-// Выбор попапа с формой изменения имени и статуса
-export const popupEdit = document.querySelector('.popup_type_profile');
-// Выбор попапа с формой изменения имени и статуса
-export const avatarEdit = document.querySelector('.popup_type_avatar');
-// Выбор кнопки "карандаш"
-export const editButtonInfo = document.querySelector('.button_type_edit');
-// Кнопка "карандаш" (аватар)
-export const editButtonAvatar = document.querySelector('.botton_type_avatar');
-// Выбор инпута смены имени
-export const nameChange = document.querySelector('.form__item_el_name');
-// Выбор инпута смены статуса
-export const statusChange = document.querySelector('.form__item_el_job');
-// Секция cards
-export const sectionCards = document.querySelector('.photo-grid__list');
-//
-export const lightBox = document.querySelector('.popup_type_fig');
-// Попап для добавления карточек
-// Выбор попапа с формой добавления фотокарточки
-export const popupCardAdd = document.querySelector('.popup_type_add');
-// Выбор кнопки "плюс"
-export const cardAddButton = document.querySelector('.button_type_add');
-// Выбор попапа удаления
-export const popupDeleteCard = document.querySelector('.popup_type_confirm');
+// Находим на странице попап, отвечающий за редактирование профиля
+const popupEditProfile = document.querySelector('.popup_type_profile');
+// Находим на странице кнопку, которая будет открывать popupEditProfile
+const buttonEditProfile = document.querySelector('.button_type_edit');
+// Находим в popupEditProfile инпут нового имени 
+const inputEditName = popupEditProfile.querySelector('.form__item_el_name');
+// Находим в popupEditProfile инпут нового описания 
+const inputEditAbout = document.querySelector('.form__item_el_job');
+// Находим на странице попап, отвечающий за изменение аватара
+const popupEditAvatar = document.querySelector('.popup_type_avatar');
+// Находим на странице кнопку, которая будет открывать popupEditAvatar
+const buttonEditAvatar = document.querySelector('.botton_type_avatar');
+// Находим контейнер, в который будем добавлять карточки
+const sectionForCards = document.querySelector('.photo-grid__list');
+// Находим попап, который будет открываться при клике на картинку 
+const popupWithImg = document.querySelector('.popup_type_fig');
+// Находим попап, отвечающий за добавление новых карточку
+const popupAddCard = document.querySelector('.popup_type_add');
+// Находим кнопку, которая будет открывать popupAddCard
+const buttonAddNewCard = document.querySelector('.button_type_add');
+// Находим попап, отвечающий за удаление карточки 
+const popupDeleteCard = document.querySelector('.popup_type_confirm');
+// Создаем переменную, в которую внесем уникальый ID пользователя
+let userId;
 
-// Выбор тега имени и статуса
+// Создаем экземпляр класса с информацией о пользователе
 const aboutUser = new UserInfo(
   {
-    profileName: '.profile__title',
-    profileStatus: '.profile__subtitle',
-    profileAvatar: '.profile__picture'
+    profileNameSelector: '.profile__title',
+    profileAboutSelector: '.profile__subtitle',
+    profilePictureSelector: '.profile__picture'
   }
 );
 
-// Выбор попапа "lightbox"
-const lightBoxOpen = new PopupWithImage(lightBox);
-// Выбор класса FormValidator для работы функций
-//const form = new FormValidator(formValidationOptions, formValidation);
+// Создаем экземпляр попапа с картинкой 
+const popupWithImgClass = new PopupWithImage(popupWithImg);
 
-//Для каждой проверяемой формы создайте экземпляр класса FormValidator
+//Для каждой проверяемой формы создааем экземпляр класса FormValidator
 
-const addFromValidator = new FormValidator(validationInputs, popupCardAdd);
-const profileFromValidator = new FormValidator(validationInputs, popupEdit);
-const avatarFormValidator = new FormValidator(validationInputs, avatarEdit);
+const addCardFromValidator = new FormValidator(validationInputs, popupAddCard);
+const editProfileFromValidator = new FormValidator(validationInputs, popupEditProfile);
+const editAvatarFormValidator = new FormValidator(validationInputs, popupEditAvatar);
 
-// Выбор API
+// Создаем экземпляр класса АПИ с нашими настройками
 const api = new API({
   baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-16',
   headers: {
@@ -62,10 +61,9 @@ const api = new API({
   },
 });
 
-// Пустая переменная для ID
-let userId;
 
-// Функция загрузки имени из сервера
+
+// Загружаем информацию о пользователе с сервера (имя, описание аватар) и присываем ID 
 function getUserInfo() {
   api.getUserInfo()
     .then((user) => {
@@ -78,9 +76,9 @@ function getUserInfo() {
     });
 }
 
-// Функция информирующая о загрузке
-function renderLoad(isLoading, blockPop, value) {
-  const buttonSaveForm = blockPop.querySelector('.button_type_submit');
+// Имитация загрузки 
+function renderLoad(isLoading, activePopUp, value) {
+  const buttonSaveForm = activePopUp.querySelector('.button_type_submit');
   if (isLoading) {
     buttonSaveForm.textContent = 'Загрузка...';
     buttonSaveForm.setAttribute('disabled', true);
@@ -90,64 +88,64 @@ function renderLoad(isLoading, blockPop, value) {
   }
 }
 
-// Сохраняет изменения в форме изменения имени и статуса
-const saveChanges = new PopupWithForm(popupEdit, {
+// Сохраняем новую информацию о пользователе и создаем экземпляр класса попапа для редактирования
+const saveProfileChanges = new PopupWithForm(popupEditProfile, {
   onSubmit: (item) => {
-    renderLoad(true, popupEdit, 'Сохранить');
+    renderLoad(true, popupEditProfile, 'Сохранить');
     api.sendUserInfo(item.name, item.job)
       .then((res) => {
         aboutUser.setUserInfo(res)
-        saveChanges.close();
+        saveProfileChanges.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        renderLoad(false, popupEdit, 'Сохранить');
+        renderLoad(false, popupEditProfile, 'Сохранить');
       })
   }
 });
 
-// Открытие попапа с пустыми инпутами (форма изменения имени и статуса) 
+// Функция, отвечающиая за открытие попапа для редактирования профиля
 const openPopupEdit = () => {
 
   const userData = aboutUser.getUserInfo();
-  nameChange.value = userData.nameInput;
-  statusChange.value = userData.statusInput;
-  profileFromValidator.openCheckValidation();
-  saveChanges.open();
+  inputEditName.value = userData.nameInput;
+  inputEditAbout.value = userData.statusInput;
+  editProfileFromValidator.openCheckValidation();
+  saveProfileChanges.open();
 }
 
-// Открытие попапа с пустыми инпутами (форма изменения профиля аватара)
-const openAvatarEdit = () => {
-  avatarFormValidator.openCheckValidation();
-  saveAvatar.open();
+// Функция, отвечающая за открытие попапа для редактирования аватара
+const openPopupAvatarEdit = () => {
+  editAvatarFormValidator.openCheckValidation();
+  saveNewAvatar.open();
 }
 
-// Сохранение нового аватара (форма изменения профиля аватара)
-const saveAvatar = new PopupWithForm(avatarEdit, {
+// Сохраняем новую аватарку и создаем экземпляр класса попапа для редактирования автара
+const saveNewAvatar = new PopupWithForm(popupEditAvatar, {
   onSubmit: (item) => {
-    renderLoad(true, avatarEdit, 'Создать');
+    renderLoad(true, popupEditAvatar, 'Сохранить');
     api.sendUserAvatar(item.link)
       .then((res) => {
         aboutUser.setUserInfo(res)
-        saveAvatar.close();
+        saveNewAvatar.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        renderLoad(false, avatarEdit, 'Создать');
+        renderLoad(false, popupEditAvatar, 'Сохранить');
       })
   }
 })
 
-// Функция рендера карт
+// Функция, отвечающая за отрисоку карт и создание экземпляра класса кард
 function renderCard(item, position) {
   const card = new Card({
     data: item,
     handleCardClick: () => {
-      lightBoxOpen.open(item);
+      popupWithImgClass.open(item);
     },
     handleDeleteClick: () => {
       const deleteCard = new PopupWithForm(popupDeleteCard, {
@@ -155,7 +153,7 @@ function renderCard(item, position) {
           renderLoad(true, popupDeleteCard, 'Да');
           api.deleteCard(card._cardId)
             .then((res) => {
-              card._remove(res);
+              card.removeCard(res);
               deleteCard.close();
             })
             .catch((err) => {
@@ -171,56 +169,56 @@ function renderCard(item, position) {
   }, '.card-template',
     () => api.addLike(item._id)
           .then((res)=>{
-            console.log(item)
-            item.setLikes(res);
+            card.setLikes(res);
           }),
     () => api.removeLike(item._id), userId);
   const cardElement = card.newCard();
   loadCards.addItem(cardElement, position);
 }
 
-// Константа: при вызове загрузит карты из массива
+// Функция, отвечающая за добавление карточек и создание экземпляра класса Section
 const loadCards = new Section({
   renderer: (item) => {
     renderCard(item, 'append');
   }
-}, sectionCards)
+}, sectionForCards)
 
-// Открытие попапа с пустыми инпутами (форма добавления фотокарточек)
+// Функций, отвечающая за открытие попапа для добавление новой карточки
 const openPopupCardAdd = () => {
-  addFromValidator.openCheckValidation();
-  popupNewCard.open();
+  addCardFromValidator.openCheckValidation();
+  popupAddNewCard.open();
 }
 
-// Добавляет новые фотокарточки
-const popupNewCard = new PopupWithForm(popupCardAdd, {
+// Добавление нвой карточи и создание экземпляра попапа для доабвлние карточек
+const popupAddNewCard = new PopupWithForm(popupAddCard, {
   onSubmit: (item) => {
-    renderLoad(true, popupCardAdd, 'Создать');
+    renderLoad(true, popupAddCard, 'Создать');
     api.postNewCard(item.place, item.img)
       .then((res) => {
         renderCard(res, 'prepend');
-        popupNewCard.close();
+        popupAddNewCard.close();
       })
       .catch((err) => {
         console.log(err);
       })
       .finally(() => {
-        renderLoad(false, popupCardAdd, 'Создать');
+        renderLoad(false, popupAddCard, 'Создать');
       })
   }
 });
 
-// Кнопка "карандаш"
-editButtonInfo.addEventListener('click', () => openPopupEdit());
-// Кнопка "плюс"
-cardAddButton.addEventListener('click', () => openPopupCardAdd());
-// Кнопка "карандаш" (аватар)
-editButtonAvatar.addEventListener('click', () => openAvatarEdit());
+// Устанавливаем слушателя на кнопку редактирования
+buttonEditProfile.addEventListener('click', () => openPopupEdit());
+// Устанавливаем слушателя на кнопку добавления карточки
+buttonAddNewCard.addEventListener('click', () => openPopupCardAdd());
+// Устанавливаем слушателя на кнопку сохранения нового автара
+buttonEditAvatar.addEventListener('click', () => openPopupAvatarEdit());
 
-// Загружаем имя и статус с сервера
+// Загружаем информацию о пользователе 
 getUserInfo();
 
-// Загружаем фотокарточки
+// Загружаем карочки с сервера 
+
 api.getInitialCards()
   .then((res) => {
     loadCards.renderItems(res)
@@ -229,7 +227,8 @@ api.getInitialCards()
     console.log(err);
   });
 
-// Функция валидации из модуля
-addFromValidator.enableValidation();
-profileFromValidator.enableValidation();
-avatarFormValidator.enableValidation();
+// Активирвуем валидацию форм 
+
+addCardFromValidator.enableValidation();
+editProfileFromValidator.enableValidation();
+editAvatarFormValidator.enableValidation();
