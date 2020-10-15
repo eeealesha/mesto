@@ -1,32 +1,25 @@
-
-const profile = document.querySelector(".profile");
-const profileName = profile.querySelector(".profile__title");
-const profileJob = profile.querySelector(".profile__subtitle");
-const profilePic = profile.querySelector(".profile__picture")
-//Создайте класс UserInfo
-//Класс UserInfo отвечает за управление отображением информации о пользователе на странице. Этот класс:
-export class UserInfo {
-    //Принимает в конструктор объект с селекторами двух элементов: 
-    //элемента имени пользователя и элемента информации о себе.
-    constructor({ name, info }) {
-        this._name = name;
-        this._info = info;
+class UserInfo {
+    constructor({profileName, profileStatus, profileAvatar}) {
+      this._profileName = document.querySelector(profileName);
+      this._profileStatus = document.querySelector(profileStatus);
+      this._profileAvatar = document.querySelector(profileAvatar);
+      this.getUserInfo = this.getUserInfo.bind(this);
     }
-    //Содержит публичный метод getUserInfo, который возвращает объект с данными пользователя. 
-    //Этот метод пригодится когда данные пользователя нужно будет подставить в форму при открытии.
+  
     getUserInfo() {
-        return {   
-            name: this._name.textContent,
-            info: this._info.textContent
-        }
+      this._editChange = {};
+      this._editChange.nameInput = this._profileName.textContent;
+      this._editChange.statusInput = this._profileStatus.textContent;
+      this._editChange.avatarInput = this._profileAvatar.src;
+  
+      return this._editChange;
     }
-    //Содержит публичный метод setUserInfo, который принимает новые данные пользователя и добавляет их на страницу.
-    setUserInfo(newName, newInfo) {
-        profileName.textContent = newName;
-        profileJob.textContent = newInfo;
+    
+    setUserInfo(data) {
+      this._profileName.textContent = data.name;
+      this._profileStatus.textContent = data.about;
+      this._profileAvatar.src = data.avatar;
     }
-
-    setUserImg(newImg) {
-        profilePic.src = newImg;
-    }
-}
+  }
+  
+  export {UserInfo}

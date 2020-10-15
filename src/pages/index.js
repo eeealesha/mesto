@@ -1,236 +1,235 @@
-import './index.css'; // добавьте импорт главного файла стилей
-
-import { initialCards } from "../utils/constants.js";
-
-import { Card } from "../components/Card.js";
-
-import { FormValidator } from "../components/FormValidator.js";
-
-import { Section } from "../components/Section.js";
-
-import { PopupWithImage } from "../components/PopupWithImage.js"
-
-import { UserInfo } from "../components/UserInfo.js"
-
+// Импортируем компоненты, стили и константы
+import "./index.css";
+import { API } from '../components/API.js';
+import { Card } from '../components/Card.js';
+import { FormValidator } from '../components/FormValidator.js';
 import { PopupWithForm } from '../components/PopupWithForm.js';
+import { PopupWithImage } from '../components/PopupWithImage.js'
+import { UserInfo } from '../components/UserInfo.js'
+import { Section } from '../components/Section.js'
+import { validationInputs } from '../utils/constants.js';
 
-import { PopupWithSubmit } from '../components/PopupWithSubmit.js';
+// Выбор попапа с формой изменения имени и статуса
+export const popupEdit = document.querySelector('.popup_type_profile');
+// Выбор попапа с формой изменения имени и статуса
+export const avatarEdit = document.querySelector('.popup_type_avatar');
+// Выбор кнопки "карандаш"
+export const editButtonInfo = document.querySelector('.button_type_edit');
+// Кнопка "карандаш" (аватар)
+export const editButtonAvatar = document.querySelector('.botton_type_avatar');
+// Выбор инпута смены имени
+export const nameChange = document.querySelector('.form__item_el_name');
+// Выбор инпута смены статуса
+export const statusChange = document.querySelector('.form__item_el_job');
+// Секция cards
+export const sectionCards = document.querySelector('.photo-grid__list');
+//
+export const lightBox = document.querySelector('.popup_type_fig');
+// Попап для добавления карточек
+// Выбор попапа с формой добавления фотокарточки
+export const popupCardAdd = document.querySelector('.popup_type_add');
+// Выбор кнопки "плюс"
+export const cardAddButton = document.querySelector('.button_type_add');
+// Выбор попапа удаления
+export const popupDeleteCard = document.querySelector('.popup_type_confirm');
 
+// Выбор тега имени и статуса
+const aboutUser = new UserInfo(
+  {
+    profileName: '.profile__title',
+    profileStatus: '.profile__subtitle',
+    profileAvatar: '.profile__picture'
+  }
+);
 
-//Импортирую класс АПИ
-
-import { API } from "../components/API.js"
-
-//Импортрую токен 
-
-import { validationInputs, token } from '../utils/constants.js';
-
-//Создаю экземпляр класса АПИ
-
-const Api = new API(token);
-
-const popup = document.querySelector(".popup_type_profile");
-
-
-const formName = popup.querySelector(".form__item_el_name");
-const formJob = popup.querySelector(".form__item_el_job");
-
-const profile = document.querySelector(".profile");
-const profileName = profile.querySelector(".profile__title");
-const profileJob = profile.querySelector(".profile__subtitle");
-const buttonEdit = profile.querySelector(".button_type_edit");
-
-const buttonAdd = document.querySelector(".button_type_add");
-
-const popupAdd = document.querySelector(".popup_type_add");
-const addCardForm = document.forms["card"];
-
-
-const popupFig = document.querySelector(".popup_type_fig");
-
-const buttonAvatar = document.querySelector(".botton_type_avatar");
-
-const cardsContainer = document.querySelector(".photo-grid__list");
-
-//Находим попап удаления карточки
-
-const popupConfirm = document.querySelector(".popup_type_confirm")
-
-//Находим кнопку удаления карточки 
-
-const buttonConfirm = document.querySelector(".button_type_delete")
-
-//Находим попап для замены аватарки
-
-const avatarPop = document.querySelector(".popup_type_avatar")
+// Выбор попапа "lightbox"
+const lightBoxOpen = new PopupWithImage(lightBox);
+// Выбор класса FormValidator для работы функций
+//const form = new FormValidator(formValidationOptions, formValidation);
 
 //Для каждой проверяемой формы создайте экземпляр класса FormValidator
 
-const addFromValidator = new FormValidator(validationInputs, popupAdd);
-const profileFromValidator = new FormValidator(validationInputs, popup);
-const avatarFormValidator = new FormValidator(validationInputs, avatarPop);
-//Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
-//Создаем попап с картинкой
+const addFromValidator = new FormValidator(validationInputs, popupCardAdd);
+const profileFromValidator = new FormValidator(validationInputs, popupEdit);
+const avatarFormValidator = new FormValidator(validationInputs, avatarEdit);
 
-const imgPop = new PopupWithImage(popupFig);
-imgPop.setEventListeners();
+// Выбор API
+const api = new API({
+  baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-16',
+  headers: {
+    authorization: '2cbbf139-db5f-40de-8d4c-6c77fbe4b91c',
+    'Content-Type': 'application/json'
+  },
+});
 
+// Пустая переменная для ID
+let userId;
 
-//Функция создания экземпляра класса Card, применения метода generateCard и возврата готовой карточки
-
-function createCard(item, openFunction, selector) {
-  const card = new Card(item, openFunction, selector);
-  const cardElement = card.generateCard();
-  return cardElement;
+// Функция загрузки имени из сервера
+function getUserInfo() {
+  api.getUserInfo()
+    .then((user) => {
+      aboutUser.getUserInfo(user.name, user.about, user.avatar);
+      aboutUser.setUserInfo(user);
+      userId = user._id;
+    })
+    .catch((err) => {
+      console.log(err);
+    });
 }
 
+// Функция информирующая о загрузке
+function renderLoad(isLoading, blockPop, value) {
+  const buttonSaveForm = blockPop.querySelector('.button_type_submit');
+  if (isLoading) {
+    buttonSaveForm.textContent = 'Загрузка...';
+    buttonSaveForm.setAttribute('disabled', true);
+  } else {
+    buttonSaveForm.textContent = value;
+    buttonSaveForm.removeAttribute('disabled', true);
+  }
+}
 
-// Загружаю информацию профиля на сайт
+// Сохраняет изменения в форме изменения имени и статуса
+const saveChanges = new PopupWithForm(popupEdit, {
+  onSubmit: (item) => {
+    renderLoad(true, popupEdit, 'Сохранить');
+    api.sendUserInfo(item.name, item.job)
+      .then((res) => {
+        aboutUser.setUserInfo(res)
+        saveChanges.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        renderLoad(false, popupEdit, 'Сохранить');
+      })
+  }
+});
 
-Promise.all([Api.getUserProfile(), Api.loadCards()])
-  .then((data) => {
-    const [info, cards] = data;
-    //Создаем экземпляр класса UserInfo
-    const Info = new UserInfo({ name: info.name, info: info.about });
-    // Устанавливаем начальное имя и описание с сервера
-    Info.setUserInfo(info.name, info.about);
-    // Устанавливаем начальный аватар с сервера 
-    Info.setUserImg(info.avatar);
-    // Сохрвняем нам уникальный ID 
-    const userID = info._id;
-    //Создаем попап с формой/профилем
-    const profilePop = new PopupWithForm(popup, profileSubmit);
-    //Устанавливаем слушатели
-    profilePop.setEventListeners();
-    //Создаем функцию открытия попапа для редактирования профиля
-    function openProfilePopup() {
-      formName.value = profileName.textContent;
-      formJob.value = profileJob.textContent;
-      profilePop.openPopup();
-      profileFromValidator.openCheckValidation();
+// Открытие попапа с пустыми инпутами (форма изменения имени и статуса) 
+const openPopupEdit = () => {
+
+  const userData = aboutUser.getUserInfo();
+  nameChange.value = userData.nameInput;
+  statusChange.value = userData.statusInput;
+  profileFromValidator.openCheckValidation();
+  saveChanges.open();
+}
+
+// Открытие попапа с пустыми инпутами (форма изменения профиля аватара)
+const openAvatarEdit = () => {
+  avatarFormValidator.openCheckValidation();
+  saveAvatar.open();
+}
+
+// Сохранение нового аватара (форма изменения профиля аватара)
+const saveAvatar = new PopupWithForm(avatarEdit, {
+  onSubmit: (item) => {
+    renderLoad(true, avatarEdit, 'Создать');
+    api.sendUserAvatar(item.link)
+      .then((res) => {
+        aboutUser.setUserInfo(res)
+        saveAvatar.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        renderLoad(false, avatarEdit, 'Создать');
+      })
+  }
+})
+
+// Функция рендера карт
+function renderCard(item, position) {
+  const card = new Card({
+    data: item,
+    handleCardClick: () => {
+      lightBoxOpen.open(item);
+    },
+    handleDeleteClick: () => {
+      const deleteCard = new PopupWithForm(popupDeleteCard, {
+        onSubmit: () => {
+          renderLoad(true, popupDeleteCard, 'Да');
+          api.deleteCard(card._cardId)
+            .then((res) => {
+              card._remove(res);
+              deleteCard.close();
+            })
+            .catch((err) => {
+              console.log(err);
+            })
+            .finally(() => {
+              renderLoad(false, popupDeleteCard, 'Да');
+            })
+        }
+      });
+      deleteCard.open(item);
     }
-    //Добавляем слушателя кнопке редактирования профиля
-    buttonEdit.addEventListener("click", openProfilePopup);
-    //Функция обработки формы профиля 
-    function profileSubmit(data) {
-      //Отравка данных на сервер
-      Api.setUserProfile(data.name, data.job)
-        .then((data) => {
-          //сохранение данных
-          Info.setUserInfo(data.name, data.about);
-        })
-        .then(() => {
-          //возвращаю нормальное состояние кнопке сохранить
-          popup.querySelector(".button_type_submit").textContent = "Сохранить";
-          profilePop.closePopup();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    //Создаем экземпляр попапа для редактирования попапа
-    const avatarPopUP = new PopupWithForm(avatarPop, avatarSubmit);
-    //Устанавливаем слушатели
-    avatarPopUP.setEventListeners();
-    //Добавляем слушателя кнопке редактирования аватара
-    buttonAvatar.addEventListener("click", openAvatarPopup);
-    //Функция открытия попапа с аватаром
-    function openAvatarPopup() {
-      avatarPopUP.openPopup();
-      avatarFormValidator.openCheckValidation();
-    }
-    //Функция обработки формы аватара
-    function avatarSubmit(avatar) {
-      //Отравка данных на сервер
-      Api.setUserAvatar(avatar)
-        .then((avatar) => {
-          //сохранение данных
-          Info.setUserImg(avatar);
-        })
-        .then(() => {
-          //возвращаю нормальное состояние кнопке сохранить
-          popup.querySelector(".button_type_submit").textContent = "Сохранить";
-          profilePop.closePopup();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+  }, '.card-template',
+    () => api.addLike(item._id)
+          .then((res)=>{
+            console.log(item)
+            item.setLikes(res);
+          }),
+    () => api.removeLike(item._id), userId);
+  const cardElement = card.newCard();
+  loadCards.addItem(cardElement, position);
+}
 
-    const submitPopup = new PopupWithSubmit(popupConfirm);
-    
+// Константа: при вызове загрузит карты из массива
+const loadCards = new Section({
+  renderer: (item) => {
+    renderCard(item, 'append');
+  }
+}, sectionCards)
 
-    //Создаем экземпляр класса Section для класса Card
+// Открытие попапа с пустыми инпутами (форма добавления фотокарточек)
+const openPopupCardAdd = () => {
+  addFromValidator.openCheckValidation();
+  popupNewCard.open();
+}
 
-    const cardSection = new Section({
-      items: cards, renderer: (item) => {
-        return createCard({
-          data: item, userID: userID, openPopup: () => {
-            imgPop.openPopup(item)
-          }, cardPutLike: () => { Api.cardPutLike(item._id) },
-          cardDeleteLike: () => { Api.cardDeleteLike(item._id) },
-          handleTrashButtonClick: () => { submitPopup.open() },
-          setHandleSubmit: () => {submitPopup.setHandleSubmit(deleteThisCard(item))},
-          removeCard: () => { Api.cardDelete(item._id) }
-        }, ".cardTemplate");
-      }
-    }, cardsContainer);
+// Добавляет новые фотокарточки
+const popupNewCard = new PopupWithForm(popupCardAdd, {
+  onSubmit: (item) => {
+    renderLoad(true, popupCardAdd, 'Создать');
+    api.postNewCard(item.place, item.img)
+      .then((res) => {
+        renderCard(res, 'prepend');
+        popupNewCard.close();
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => {
+        renderLoad(false, popupCardAdd, 'Создать');
+      })
+  }
+});
 
-    //Отрисовываем все карточки с помощью метода renderItems класса Section
-    cardSection.renderItems(cards);
+// Кнопка "карандаш"
+editButtonInfo.addEventListener('click', () => openPopupEdit());
+// Кнопка "плюс"
+cardAddButton.addEventListener('click', () => openPopupCardAdd());
+// Кнопка "карандаш" (аватар)
+editButtonAvatar.addEventListener('click', () => openAvatarEdit());
 
-    function deleteThisCard(item){
-      Api.cardDelete(item._id)
-    }
+// Загружаем имя и статус с сервера
+getUserInfo();
 
-    submitPopup.setEventListeners();
-
-    //Создаем попап с функцией добавления карточки 
-    const addPop = new PopupWithForm(popupAdd, addSubmit);
-
-    buttonAdd.addEventListener("click", openAddPopup);
-
-    addPop.setEventListeners();
-
-    function openAddPopup() {
-      addFromValidator.openCheckValidation();
-      addPop.openPopup();
-    }
-
-    //Функция обработки формы профиля 
-
-    function addSubmit(item) {
-      Api.setCard(item.place, item.img)
-        .then((item) => {
-          cardSection.addItem(createCard({
-            data: item, userID: userID, openPopup: () => {
-              imgPop.openPopup(item)
-            }, cardPutLike: () => { Api.cardPutLike(item._id) },
-            cardDeleteLike: () => { Api.cardDeleteLike(item._id)},
-            handleTrashButtonClick: () => { submitPopup.open() },
-            setHandleSubmit: submitPopup.setHandleSubmit,
-            removeCard: () => { Api.cardDelete(item._id) }
-          }, ".cardTemplate"));
-        })
-        .then(() => {
-          //возвращаю нормальное состояние кнопке сохранить
-          addPop.querySelector(".button_type_submit").textContent = "Сохранить";
-          addPop.closePopup();
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
-    
+// Загружаем фотокарточки
+api.getInitialCards()
+  .then((res) => {
+    loadCards.renderItems(res)
   })
+  .catch((err) => {
+    console.log(err);
+  });
 
-//Для каждой проверяемой формы создайте экземпляр класса FormValidator
-
+// Функция валидации из модуля
 addFromValidator.enableValidation();
-
 profileFromValidator.enableValidation();
-
 avatarFormValidator.enableValidation();
-
-
-

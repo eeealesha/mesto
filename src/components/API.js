@@ -1,122 +1,87 @@
 export class API {
-    constructor(token) {
-        this._token = token;
+    constructor(options) {
+      this.baseUrl = options.baseUrl;
+      this.headers = options.headers;
     }
-
-    ///Информация о пользователе должна подгружаться с сервера. 
-    //Чтобы осуществить это, сделайте GET-запрос на URL (cohortId замените на идентификатор вашей группы)
-    getUserProfile() {
-        return fetch(`${this._token.generalURL}/users/me`, {
-            method: "GET",
-            headers: this._token.headers
+  
+    _response(res) {
+      if (res.ok) {
+        return res.json();
+      }
+      return Promise.reject(`error${res.status}`);
+    }
+  
+    getUserInfo() {
+      return fetch(`${this.baseUrl}/users/me`, {
+        headers: this.headers,
+      })
+      .then(this._response);
+    }
+  
+    sendUserInfo(userName, userAbout) {
+      return fetch(`${this.baseUrl}/users/me`, {
+        method: 'PATCH',
+        headers: this.headers,
+        body: JSON.stringify({
+          name: userName,
+          about: userAbout
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Error: ${res.status}`);
-            });
+      })
+      .then(this._response);
     }
-    //Отредактированные данные профиля должны сохраняться на сервере. Для этого отправьте запрос методом PATCH:
-    setUserProfile(name, about) {
-        return fetch(`${this._token.generalURL}/users/me`, {
-            method: 'PATCH',
-            headers: this._token.headers,
-            body: JSON.stringify({
-                name: name,
-                about: about
-            })
+  
+    sendUserAvatar(userAvatar) {
+      return fetch(`${this.baseUrl}/users/me/avatar`, {
+        method: 'PATCH',
+        headers: this.headers,
+        body: JSON.stringify({
+          avatar: userAvatar
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+      })
+      .then(this._response);
     }
-    //Чтобы сменить аватар, отправьте такой PATCH-запрос:
-    setUserAvatar(avatar) {
-        return fetch(`${this._token.generalURL}/users/me/avatar`, {
-            method: 'PATCH',
-            headers: this._token.headers,
-            body: JSON.stringify({
-                avatar: avatar.link
-            })
+  
+    getInitialCards() {
+      return fetch(`${this.baseUrl}/cards`, {
+        method: 'GET',
+        headers: this.headers,
+      })
+      .then(this._response);
+    }
+  
+    postNewCard(cardName, cardLink) {
+      return fetch(`${this.baseUrl}/cards`, {
+        method: 'POST',
+        headers: this.headers,
+        body: JSON.stringify({
+          name: cardName,
+          link: cardLink
         })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+      })
+      .then(this._response);
     }
-    //Загружаем данные с сервера
-    loadCards() {
-        return fetch(`${this._token.generalURL}/cards`, {
-            method: 'GET',
-            headers: this._token.headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+  
+    deleteCard(cardId) {
+      return fetch(`${this.baseUrl}/cards/${cardId}`, {
+        method: 'DELETE',
+        headers: this.headers,
+      })
+      .then(this._response);
     }
-    //Ставим лайк на сервер
-    cardPutLike(ID) {
-        return fetch(`${this._token.generalURL}/cards/likes/${ID}`, {
-            method: 'PUT',
-            headers: this._token.headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+  
+    addLike(cardId) {
+      return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+        method: 'PUT',
+        headers: this.headers,
+      })
+      .then(this._response);
     }
-    //Убираем лайк на сервер
-    cardDeleteLike(ID) {
-        return fetch(`${this._token.generalURL}/cards/likes/${ID}`, {
-            method: 'DELETE',
-            headers: this._token.headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
+    
+    removeLike(cardId) {
+      return fetch(`${this.baseUrl}/cards/likes/${cardId}`, {
+        method: 'DELETE',
+        headers: this.headers,
+      })
+      .then(this._response);
     }
-    //Добавляем карточку 
-    setCard(name, link) {
-        return fetch(`${this._token.generalURL}/cards`, {
-            method: 'POST',
-            headers: this._token.headers,
-            body: JSON.stringify({
-                name: name,
-                link: link
-            })
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
-    }
-    //Удаляем карточку
-    cardDelete(ID) {
-        return fetch(`${this._token.generalURL}/cards/${ID}`, {
-            method: 'DELETE',
-            headers: this._token.headers
-        })
-            .then((res) => {
-                if (res.ok) {
-                    return res.json();
-                }
-                return Promise.reject(`Ошибка: ${res.status}`);
-            });
-    }
-}
+  }

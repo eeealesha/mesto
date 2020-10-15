@@ -1,42 +1,52 @@
-//Создайте класс Popup, который отвечает за открытие и закрытие попапа. Этот класс:
-export class Popup {
-    //Принимает в конструктор единственный параметр — селектор попапа.
-    constructor(popupSelector) {
-        this._popupSelector = popupSelector;
-        this._pressKey = this._pressKey.bind(this);
-        this._closePopupOverlay = this._closePopupOverlay.bind(this);
+class Popup {
+    constructor(popup) {
+      this._popup = popup;
+      this._closeIcon = this._popup.querySelector('.button_type_close');
+      this._closeButtonHandler = this._closeButtonHandler.bind(this);
+      this._closeOverlayHandler = this._closeOverlayHandler.bind(this);
+      this._handleEscClose = this._handleEscClose.bind(this);
     }
-    //Содержит публичные методы open и close, которые отвечают за открытие и закрытие попапа.
-    openPopup () {
-        this._popupSelector.classList.add("popup_opened");
-        this._popupSelector.addEventListener("click", this._closePopupOverlay);
-        document.addEventListener("keydown", this._pressKey);
+  
+    open() {
+      this._popup.classList.add('popup_opened');
+      this.setEventListeners();
     }
-
-    closePopup() {
-        this._popupSelector.classList.remove("popup_opened");
-        this._popupSelector.removeEventListener("click", this._closePopupOverlay);
-        document.removeEventListener("keydown", this._pressKey);
+  
+    close() {
+      this._popup.classList.remove('popup_opened');
+      this.removeEventListeners()
     }
-    //Содержит приватный метод _handleEscClose, который содержит логику закрытия попапа клавишей Esc.      
-    _pressKey(event) {
-        if (event.key === "Escape") {
-            this.closePopup()
-        }
-    };
-    _closePopupOverlay(event) {
-        if (event.target !== event.currentTarget) return;
-        this.closePopup()
-    };
-    //Содержит публичный метод setEventListeners, который добавляет слушатель клика иконке закрытия попапа.
+  
+    _closeButtonHandler() {
+      this.close()
+    }
+  
+    _closeOverlayHandler(evt) {
+      if (evt.target.classList.contains('popup')) {
+        this.close()
+      }
+    }
+  
+    _handleEscClose(evt) {
+      if (evt.key === 'Escape') {
+        this.close()
+      }
+    }
+  
     setEventListeners() {
-        this._button = this._popupSelector.querySelector(".button_type_close");
-        this._button.addEventListener("click", () => {
-            this.closePopup();
-        });
+      this._closeIcon.addEventListener('click', this._closeButtonHandler)
+      this._popup.addEventListener('click', this._closeOverlayHandler);
+      document.addEventListener('keydown', this._handleEscClose);
     }
-}
-
+  
+    removeEventListeners() {
+      this._closeIcon.removeEventListener('click', this._closeButtonHandler)
+      this._popup.removeEventListener('click', this._closeOverlayHandler);
+      document.removeEventListener('keydown', this._handleEscClose);
+    }
+  }
+  
+  export {Popup}
 
 
 

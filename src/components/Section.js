@@ -1,25 +1,22 @@
-//Создайте класс Section
-//Создайте класс Section, который отвечает за отрисовку элементов на странице. Этот класс:
-export class Section {
-    //Первым параметром конструктора принимает объект с двумя свойствами: items и renderer. 
-    constructor({items, renderer}, containerSelector) {
-        //Свойство items — это массив данных, которые нужно добавить на страницу при инициализации класса. 
-        this._items = items;
-        //Свойство renderer — это функция, которая отвечает за создание и отрисовку данных на странице.
-        this._renderer = renderer;
-        //Второй параметр конструктора — селектор контейнера, в который нужно добавлять созданные элементы.
-        this._containerSelector = containerSelector;
+class Section {
+    constructor({ renderer }, containerSelector) {
+      this._renderer = renderer;
+      this._containerSelector = containerSelector;
     }
-    //Содержит публичный метод, который отвечает за отрисовку всех элементов. 
-    renderItems() {
-        this._items.forEach(element => {
-            //Отрисовка каждого отдельного элемента должна осуществляться функцией renderer.
-            this.addItem(this._renderer(element));
-        });
+  
+    renderItems(items) {
+      items.forEach(item => {
+        this._renderer(item);
+      });
     }
-    //Содержит публичный метод addItem, который принимает DOM-элемент и добавляет его в контейнер.
-    addItem(element) {
-        this._containerSelector.prepend(element)
+  
+    addItem(element, place = "append") {
+      if (place === 'prepend') {
+        this._containerSelector.prepend(element);
+      } else {
+        this._containerSelector.append(element);
+      }
     }
-}
-//У класса Section нет своей разметки. Он получает разметку через функцию-колбэк и вставляет её в контейнер.
+  }
+  
+  export {Section}
