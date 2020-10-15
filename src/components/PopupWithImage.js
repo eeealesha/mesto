@@ -1,18 +1,17 @@
-import {Popup} from './Popup.js'
+import { Popup } from "./Popup.js";
 
-class PopupWithImage extends Popup {
+export class PopupWithImage extends Popup {
   constructor(popup) {
     super(popup);
   }
 
   open(data) {
-    const LightBoxImage = this._popup.querySelector('.popup__img')
-    const LightBoxCaption = this._popup.querySelector('.popup__figcaption')
-    LightBoxImage.src = data.link;
-    LightBoxImage.alt = data.name;
-    LightBoxCaption.textContent = data.name;
+    // При открытии попапа с картинкой, передаем ему информацию из карточки
+    const cardPicture = this._popup.querySelector(".popup__img");
+    const cardPictureCaption = this._popup.querySelector(".popup__figcaption");
+    cardPicture.src = data.link;
+    cardPicture.alt = data.name;
+    cardPictureCaption.textContent = data.name;
     super.open();
   }
 }
-
-export {PopupWithImage};

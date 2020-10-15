@@ -1,4 +1,4 @@
-// Шаблон из классов для валидации
+// Настройки валидации
 export const validationInputs = {
   fieldSelector: ".form",
   inputSelector: ".form__item",

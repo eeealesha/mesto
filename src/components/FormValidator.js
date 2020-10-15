@@ -9,7 +9,7 @@ export class FormValidator {
     this._errorClass = validationInputs.errorClass;
     this._formSelector = formHTMLSelector; //принимает вторым параметром элемент той формы, которая валидируется;
   }
-//имеет один публичный метод enableValidation, который включает валидацию формы.
+  //имеет один публичный метод enableValidation, который включает валидацию формы.
   enableValidation() {
     this._formSelector.addEventListener("submit", (event) => {
       event.preventDefault();
