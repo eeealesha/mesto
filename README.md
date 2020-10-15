@@ -8,6 +8,8 @@
 
 # Проект 8: Место 30.09.2020
 
+# Проект 9: Место 15.10.2020
+
 ## Автор: Гаврилов Алексей 
 
 ### Обзор
@@ -20,6 +22,7 @@
 * Изменения от 01.09.2020
 * Изменения от 12.09.2020
 * Изменения от 30.09.2020
+* Изменения от 15.10.2020
 
 **О проекте**
 
@@ -30,11 +33,14 @@
 * https://www.figma.com/file/StZjf8HnoeLdiXS7dYrLAh/JavaScript.-Sprint-4
 * https://www.figma.com/file/nlYpT4VhFiwimn2YlncrcF/JavaScript.-Sprint-5
 * https://www.figma.com/file/XNaGNEZD5NEjeyJzAT4gMb/JavaScript.-Sprint-6
+* https://www.figma.com/file/hhhIavVTeuilfPPZ6sbifl/JavaScript.-Sprint-9
 
 **Технологии**
 
 * html, css, javascript
 * grid, flex, template
+* webpack, babel
+* OOP, Promise
 
 **GitHubPages**
 
@@ -61,3 +67,8 @@
 
 * рефакторинг кода продолжается: профиль, попапы, секции и карточки в соответсвии с ООП
 * подключили к проекту npm, webpack, babel и прочие 
+
+**Изменения от 15.10.2020**
+
+* Использовали Promise, сборку проекта, имитация загрузки
+* Подключили сайт к серверу с помощью API
