@@ -6,15 +6,6 @@ export class PopupWithForm extends Popup {
     this._onSubmit = onSubmit;
     this._submit = this._submitData.bind(this);
   }
-  _getInputValues() {
-    this._inputList = this._popup.querySelectorAll(".form__item");
-    this._inputValue = {};
-    this._inputList.forEach((item) => {
-      this._inputValue[item.name] = item.value;
-    });
-    return this._inputValue;
-  }
-
   open() {
     this.setEventListeners();
     super.open();
@@ -24,6 +15,15 @@ export class PopupWithForm extends Popup {
     this._popup.querySelector(".popup__container").reset();
     this.removeEventListeners();
     super.close();
+  }
+  // Собираем данные с инпутов форм попапов
+  _getInputValues() {
+    this._inputList = this._popup.querySelectorAll(".form__item");
+    this._inputValue = {};
+    this._inputList.forEach((item) => {
+      this._inputValue[item.name] = item.value;
+    });
+    return this._inputValue;
   }
 
   setEventListeners() {

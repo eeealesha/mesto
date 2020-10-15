@@ -32,9 +32,41 @@ export class Card {
     return this._element;
   }
 
+  // Публичный метод для создание карточек
+  generateNewCard() {
+    this._cardTemplate();
+    this._setEventListeners();
+    const cardPicture = this._element.querySelector(".photo-grid__item");
+    cardPicture.src = this._photo;
+    cardPicture.alt = this._title;
+    this._element.querySelector(".photo-grid__title").textContent = this._title;
+    this._element.querySelector(
+      ".photo-grid__like-counter"
+    ).textContent = this._likes.length;
+    // Проставляем лайки с сервера
+    if (this._likes.some((like) => like._id === this._userID)) {
+      this._element
+        .querySelector(".button_type_like")
+        .classList.add("button_liked");
+    }
+    // Удаляем из кнопку удаления карточки, если не мы ее создали
+    if (this._ownerID !== this._userID) {
+      this._element
+        .querySelector(".button_type_delete")
+        .setAttribute("hidden", true);
+    }
+    return this._element;
+  }
+
   // Устанавливаем актуальное количество лайков на момент постановки лайка
   setLikes(data) {
     this._likeCount.textContent = data.likes.length;
+  }
+
+  // Публичный метод удаления карточки
+  removeCard() {
+    this._removeEventListeners();
+    this._element.remove();
   }
 
   // Ставим или убираем лайк в зависимости от статуса лайка
@@ -52,11 +84,7 @@ export class Card {
       this._addLike(this._cardID);
     }
   }
-  // Публичный метод удаления карточки
-  removeCard() {
-    this._removeEventListeners();
-    this._element.remove();
-  }
+
   // Устнавливаем слушатели на элементы карточки
   _setEventListeners() {
     this._element
@@ -84,30 +112,5 @@ export class Card {
     this._element
       .querySelector(".photo-grid__item")
       .removeEventListener("click", this._clickOnCard);
-  }
-  // Публичный метод для создание карточек
-  generateNewCard() {
-    this._cardTemplate();
-    this._setEventListeners();
-    const cardPicture = this._element.querySelector(".photo-grid__item");
-    cardPicture.src = this._photo;
-    cardPicture.alt = this._title;
-    this._element.querySelector(".photo-grid__title").textContent = this._title;
-    this._element.querySelector(
-      ".photo-grid__like-counter"
-    ).textContent = this._likes.length;
-    // Удаляем из кнопку удаления карточки, если не мы ее создали
-    if (this._ownerID !== this._userID) {
-      this._element
-        .querySelector(".button_type_delete")
-        .setAttribute("hidden", true);
-    }
-    // Проставляем лайки с сервера
-    if (this._likes.some((like) => like._id === this._userID)) {
-      this._element
-        .querySelector(".button_type_like")
-        .classList.add("button_liked");
-    }
-    return this._element;
   }
 }
