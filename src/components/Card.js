@@ -17,8 +17,10 @@ export class Card {
     this._handleTrashButtonClick = this._handleTrashButtonClick.bind(this);
 
     this._setHandleSubmit = setHandleSubmit; 
+    this._setHandleSubmit = this._setHandleSubmit.bind(this); 
 
     this._removeCard = removeCard;
+    this._removeCard = this._removeCard.bind(this);
   }
 
   //содержит приватные методы, которые работают с разметкой,
@@ -58,9 +60,9 @@ export class Card {
     //открытие попапа подтверждения карточки
     this._element
       .querySelector(".button_type_delete")
-      .addEventListener("click", (event) => {
+      .addEventListener("click", () => {
         this._handleTrashButtonClick();
-        this._setHandleSubmit(this._deleteCard());
+        this._setHandleSubmit(this._deleteCard);
       });
     //лайк карточки
     this._element
@@ -97,8 +99,9 @@ export class Card {
   _deleteCard(){
     this._removeCard(this._ID)
     .then(() => {
-      this._card.remove();
-      this._card = null;
+      console.log(his._element)
+      this._element.remove();
+      this._element = null;
     })
     .catch((err) => {
       console.log(err);

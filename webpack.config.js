@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin'); // подключит�
 // подключите к проекту mini-css-extract-plugin
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { url } = require('inspector');
+
 module.exports = {
     entry: { main: './src/pages/index.js' },
     output: {

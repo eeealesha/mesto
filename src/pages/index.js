@@ -71,8 +71,7 @@ const profileFromValidator = new FormValidator(validationInputs, popup);
 const avatarFormValidator = new FormValidator(validationInputs, avatarPop);
 //Для каждого попапа создавайте свой экземпляр класса PopupWithForm.
 //Создаем попап с картинкой
-const submitPopup = new PopupWithSubmit(popupConfirm);
-submitPopup.setEventListeners();
+
 const imgPop = new PopupWithImage(popupFig);
 imgPop.setEventListeners();
 
@@ -157,15 +156,11 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
           console.log(err);
         });
     }
-    //Создаем экземпляр класса Section для класса Card
 
-    function cardDeleteHand(item){
-      Api.cardDelete(item._id)
-      .then((item) => {
-        console.log(item)
-        item._cardDelete()
-      })
-    }
+    const submitPopup = new PopupWithSubmit(popupConfirm);
+    
+
+    //Создаем экземпляр класса Section для класса Card
 
     const cardSection = new Section({
       items: cards, renderer: (item) => {
@@ -175,13 +170,20 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
           }, cardPutLike: () => { Api.cardPutLike(item._id) },
           cardDeleteLike: () => { Api.cardDeleteLike(item._id) },
           handleTrashButtonClick: () => { submitPopup.open() },
-          setHandleSubmit: () => { submitPopup.setHandleSubmit() }
+          setHandleSubmit: () => {submitPopup.setHandleSubmit(deleteThisCard(item))},
+          removeCard: () => { Api.cardDelete(item._id) }
         }, ".cardTemplate");
       }
     }, cardsContainer);
 
     //Отрисовываем все карточки с помощью метода renderItems класса Section
     cardSection.renderItems(cards);
+
+    function deleteThisCard(item){
+      Api.cardDelete(item._id)
+    }
+
+    submitPopup.setEventListeners();
 
     //Создаем попап с функцией добавления карточки 
     const addPop = new PopupWithForm(popupAdd, addSubmit);
@@ -206,7 +208,8 @@ Promise.all([Api.getUserProfile(), Api.loadCards()])
             }, cardPutLike: () => { Api.cardPutLike(item._id) },
             cardDeleteLike: () => { Api.cardDeleteLike(item._id)},
             handleTrashButtonClick: () => { submitPopup.open() },
-            setHandleSubmit: () => { submitPopup.setHandleSubmit() }
+            setHandleSubmit: submitPopup.setHandleSubmit,
+            removeCard: () => { Api.cardDelete(item._id) }
           }, ".cardTemplate"));
         })
         .then(() => {
