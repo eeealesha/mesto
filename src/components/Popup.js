@@ -9,7 +9,7 @@ export class Popup {
   // Публичный метод открытия попапа
   open() {
     this._popup.classList.add("popup_opened");
-    this.setEventListeners();
+    document.addEventListener("keydown", this._clickOnEscape);
   }
   // Публичный метод закрытия попапа
   close() {
@@ -36,7 +36,6 @@ export class Popup {
   setEventListeners() {
     this._buttonPopupClose.addEventListener("click", this._clickOnCloseButton);
     this._popup.addEventListener("click", this._clickOnOverlay);
-    document.addEventListener("keydown", this._clickOnEscape);
   }
   // Удаляем слушатели с кнопоки закрытия, клавиши Escape и оверлея
   removeEventListeners() {

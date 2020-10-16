@@ -116,14 +116,14 @@ function fakeLoad(isLoading, activePopUp, originalName) {
 }
 
 // Сохраняем новую информацию о пользователе и создаем экземпляр класса попапа для редактирования
-const saveProfileChanges = new PopupWithForm(popupEditProfile, {
+const popupSaveProfileChanges = new PopupWithForm(popupEditProfile, {
   onSubmit: (item) => {
     fakeLoad(true, popupEditProfile, "Сохранить");
     api
       .sendUserInfo(item.name, item.job)
       .then((res) => {
         aboutUser.setUserInfo(res);
-        saveProfileChanges.close();
+        popupSaveProfileChanges.close();
       })
       .catch((err) => {
         console.log(err);
@@ -134,24 +134,28 @@ const saveProfileChanges = new PopupWithForm(popupEditProfile, {
   },
 });
 
+// Вешаем слушателей на попап, отвечающий за изменение аватара
+
+popupSaveProfileChanges.setEventListeners();
+
 // Функция, отвечающиая за открытие попапа для редактирования профиля
 const openPopupEdit = () => {
   const userData = aboutUser.getUserInfo();
   inputEditName.value = userData.nameInput;
   inputEditAbout.value = userData.statusInput;
   editProfileFromValidator.openCheckValidation();
-  saveProfileChanges.open();
+  popupSaveProfileChanges.open();
 };
 
 // Сохраняем новую аватарку и создаем экземпляр класса попапа для редактирования автара
-const saveNewAvatar = new PopupWithForm(popupEditAvatar, {
+const popupSaveNewAvatar = new PopupWithForm(popupEditAvatar, {
   onSubmit: (item) => {
     fakeLoad(true, popupEditAvatar, "Сохранить");
     api
       .sendUserAvatar(item.link)
       .then((res) => {
         aboutUser.setUserInfo(res);
-        saveNewAvatar.close();
+        popupSaveNewAvatar.close();
       })
       .catch((err) => {
         console.log(err);
@@ -162,10 +166,14 @@ const saveNewAvatar = new PopupWithForm(popupEditAvatar, {
   },
 });
 
+// Вешаем слушателей на попап, отвечающий за изменение аватара
+
+popupSaveNewAvatar.setEventListeners();
+
 // Функция, отвечающая за открытие попапа для редактирования аватара
 const openPopupAvatarEdit = () => {
   editAvatarFormValidator.openCheckValidation();
-  saveNewAvatar.open();
+  popupSaveNewAvatar.open();
 };
 
 // Функция, отвечающая за отрисоку карт и создание экземпляра класса кард
@@ -237,6 +245,10 @@ const popupAddNewCard = new PopupWithForm(popupAddCard, {
       });
   },
 });
+
+// Вешаем слушателей на попап, отвечающий за добавление новой карточки
+
+popupAddNewCard.setEventListeners();
 
 // Функций, отвечающая за открытие попапа для добавление новой карточки
 const openPopupCardAdd = () => {
