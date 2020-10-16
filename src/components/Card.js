@@ -75,13 +75,23 @@ export class Card {
     this._likeCount = this._element.querySelector(".photo-grid__like-counter");
 
     if (this._likeButton.classList.contains("button_liked")) {
-      this._likeButton.classList.remove("button_liked");
-      this._likeCount.textContent = this._likes.length -= 1;
-      this._removeLike(this._cardID);
+      this._removeLike(this._cardID)
+        .then(() => {
+          this._likeButton.classList.remove("button_liked");
+          this._likeCount.textContent = this._likes.length -= 1;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } else {
-      this._likeButton.classList.add("button_liked");
-      this._likeCount.textContent = this._likes.length += 1;
-      this._addLike(this._cardID);
+      this._addLike(this._cardID)
+        .then(() => {
+          this._likeButton.classList.add("button_liked");
+          this._likeCount.textContent = this._likes.length += 1;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
   }
 
