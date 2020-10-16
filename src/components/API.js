@@ -8,7 +8,7 @@ export class API {
     if (res.ok) {
       return res.json();
     }
-    return Promise.reject(`error${res.status}`);
+    return Promise.reject(`Ошибка:${res.status}`);
   }
 
   getUserInfo() {
