@@ -5,6 +5,7 @@ export class PopupWithForm extends Popup {
     super(popup);
     this._onSubmit = onSubmit;
     this._submit = this._submitData.bind(this);
+    this._popupForm = this._popup.querySelector(".popup__container");
   }
   open() {
     this.setEventListeners();
@@ -12,7 +13,7 @@ export class PopupWithForm extends Popup {
   }
 
   close() {
-    this._popup.querySelector(".popup__container").reset();
+    this._popupForm.reset();
     this.removeEventListeners();
     super.close();
   }
