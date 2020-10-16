@@ -66,32 +66,23 @@ const api = new API({
   },
 });
 
-// Загружаем карточки с сервера
-api
-  .getInitialCards()
-  .then((res) => {
-    loadCards.renderItems(res);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
+// Загружаем карточки, информацию о пользователе с сервера (имя, описание аватар) и присываем ID  с сервера
 
-// Загружаем информацию о пользователе с сервера (имя, описание аватар) и присываем ID
-function getUserInfo() {
-  api
-    .getUserInfo()
-    .then((user) => {
-      aboutUser.getUserInfo(user.name, user.about, user.avatar);
-      aboutUser.setUserInfo(user);
-      userID = user._id;
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-}
-
-// Загружаем информацию о пользователе
-getUserInfo();
+Promise.all([     //в Promise.all передаем массив промисов которые нужно выполнить
+  api.getUserInfo(),
+  api.getInitialCards()
+])    
+.then((values)=>{    //попадаем сюда когда оба промиса будут выполнены
+  const [userData, initialCards] = values;
+  loadCards.renderItems(initialCards);
+  aboutUser.getUserInfo(userData.name, userData.about, userData.avatar);
+  aboutUser.setUserInfo(userData);
+  userID = userData._id;
+  // у нас есть все нужные данные, отрисовываем страницу
+})
+.catch((err)=>{     //попадаем сюда если один из промисов завершаться ошибкой
+  console.log(err);
+})
 
 // Функция имитация загрузки и уведомления пользователя
 function fakeLoad(isLoading, activePopUp, originalName) {
