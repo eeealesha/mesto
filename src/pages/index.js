@@ -185,14 +185,14 @@ function renderCard(item, position) {
         popupWithImgClass.open(item);
       },
       clickOnDeleteButton: () => {
-        const deleteCard = new PopupWithForm(popupDeleteCard, {
+        const popupDeleteCardClass = new PopupWithForm(popupDeleteCard, {
           onSubmit: () => {
             fakeLoad(true, popupDeleteCard, "Да");
             api
               .deleteCard(card._cardID)
               .then((res) => {
                 card.removeCard(res);
-                deleteCard.close();
+                popupDeleteCardClass.close();
               })
               .catch((err) => {
                 console.log(err);
@@ -202,7 +202,7 @@ function renderCard(item, position) {
               });
           },
         });
-        deleteCard.open(item);
+        popupDeleteCardClass.open(item);
       },
     },
     ".card-template",

@@ -3,15 +3,16 @@ import { Popup } from "./Popup.js";
 export class PopupWithImage extends Popup {
   constructor(popup) {
     super(popup);
+    this._cardPicture = this._popup.querySelector(".popup__img");
+    this._cardPictureCaption = this._popup.querySelector(".popup__figcaption");
   }
 
   open(data) {
     // При открытии попапа с картинкой, передаем ему информацию из карточки
-    const cardPicture = this._popup.querySelector(".popup__img");
-    const cardPictureCaption = this._popup.querySelector(".popup__figcaption");
-    cardPicture.src = data.link;
-    cardPicture.alt = data.name;
-    cardPictureCaption.textContent = data.name;
+    this._cardPicture.src = data.link;
+    this._cardPicture.alt = data.name;
+    this._cardPictureCaption.textContent = data.name;
+    super.setEventListeners();
     super.open();
   }
 }
