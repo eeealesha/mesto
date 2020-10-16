@@ -58,11 +58,6 @@ export class Card {
     return this._element;
   }
 
-  // Устанавливаем актуальное количество лайков на момент постановки лайка
-  setLikes(data) {
-    this._likeCount.textContent = data.likes.length;
-  }
-
   // Публичный метод удаления карточки
   removeCard() {
     this._removeEventListeners();
@@ -76,18 +71,18 @@ export class Card {
 
     if (this._likeButton.classList.contains("button_liked")) {
       this._removeLike(this._cardID)
-        .then(() => {
+        .then((res) => {
           this._likeButton.classList.remove("button_liked");
-          this._likeCount.textContent = this._likes.length -= 1;
+          this._likeCount.textContent = res.likes.length;
         })
         .catch((error) => {
           console.log(error);
         });
     } else {
       this._addLike(this._cardID)
-        .then(() => {
+        .then((res) => {
           this._likeButton.classList.add("button_liked");
-          this._likeCount.textContent = this._likes.length += 1;
+          this._likeCount.textContent = res.likes.length;
         })
         .catch((error) => {
           console.log(error);

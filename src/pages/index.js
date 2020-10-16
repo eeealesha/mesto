@@ -200,19 +200,8 @@ function renderCard(item, position) {
       },
     },
     ".card-template",
-    () =>
-      api
-        .addLike(item._id)
-        .then((res) => {
-          card.setLikes(res);
-        })
-        .catch((err) => {
-          console.log(err);
-        }),
-    () =>
-      api.removeLike(item._id).catch((err) => {
-        console.log(err);
-      }),
+    () => api.addLike(item._id),
+    () => api.removeLike(item._id),
     userID
   );
   const cardElement = card.generateNewCard();
