@@ -76,10 +76,11 @@ Promise.all([
   .then((values) => {
     //попадаем сюда когда оба промиса будут выполнены
     const [userData, initialCards] = values;
+    userID = userData._id;
     loadCards.renderItems(initialCards);
     aboutUser.getUserInfo(userData.name, userData.about, userData.avatar);
     aboutUser.setUserInfo(userData);
-    userID = userData._id;
+    
     // у нас есть все нужные данные, отрисовываем страницу
   })
   .catch((err) => {

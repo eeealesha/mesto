@@ -11,6 +11,8 @@ export class Card {
     this._likes = data.likes;
     this._cardID = data._id;
     this._ownerID = data.owner._id;
+    this._creatorName = data.owner.name;
+    this._creationTime = data.createdAt;
     this._addLike = addLike;
     this._removeLike = removeLike;
     this._userID = userID;
